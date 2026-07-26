@@ -261,6 +261,71 @@
     #viewReportes{ display:block !important; }
     body{ background:#fff; }
   }
+
+  /* PRESUPUESTOS */
+  .pres-dashboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:20px;}
+  .pres-kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;text-align:center;}
+  .pres-kpi .k-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px;}
+  .pres-kpi .k-val{font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:var(--ink);}
+  .pres-kpi .k-val.green{color:var(--income);}
+  .pres-kpi .k-val.red{color:var(--expense);}
+  .pres-kpi .k-val.gold{color:var(--gold);}
+  .pres-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:18px;}
+  .pres-controls .field{margin:0;min-width:130px;flex:1;}
+  .pres-controls .btn-primary{width:auto;padding:9px 16px;white-space:nowrap;flex-shrink:0;}
+  .pres-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .pres-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:10px;position:relative;}
+  .pres-card.estado-completado{border-color:var(--income);background:var(--income-bg);}
+  .pres-card.estado-cancelado{opacity:.55;}
+  .pres-card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .pres-card-title{font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;margin:0;}
+  .pres-card-badges{display:flex;gap:5px;flex-wrap:wrap;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+  .badge.prioridad-alta{background:#fee2e2;color:#991b1b;}
+  .badge.prioridad-media{background:var(--gold-bg);color:#7c4a00;}
+  .badge.prioridad-baja{background:var(--income-bg);color:#145c3a;}
+  .badge.estado-planeado{background:#e0e7ff;color:#3730a3;}
+  .badge.estado-progreso{background:var(--gold-bg);color:#7c4a00;}
+  .badge.estado-completado{background:var(--income-bg);color:#145c3a;}
+  .badge.estado-cancelado{background:#f3f4f6;color:#6b7280;}
+  .badge.cat{background:var(--bg);color:var(--ink-soft);}
+  .pres-progress-wrap{margin:2px 0;}
+  .pres-progress-track{height:10px;background:var(--bg);border-radius:6px;overflow:hidden;margin-top:4px;}
+  .pres-progress-fill{height:100%;border-radius:6px;transition:width .5s ease;background:var(--income);}
+  .pres-progress-fill.danger{background:var(--expense);}
+  .pres-progress-fill.warn{background:var(--gold);}
+  .pres-progress-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-soft);}
+  .pres-progress-pct{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ink);}
+  .pres-amounts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:2px 0;}
+  .pres-amt{text-align:center;padding:7px 4px;background:var(--bg);border-radius:7px;}
+  .pres-amt .a-lbl{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;}
+  .pres-amt .a-val{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:13px;margin-top:2px;}
+  .pres-amt .a-val.green{color:var(--income);}
+  .pres-amt .a-val.red{color:var(--expense);}
+  .pres-meta{font-size:12px;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:8px;}
+  .pres-alerts{display:flex;flex-direction:column;gap:5px;}
+  .pres-alert{padding:6px 10px;border-radius:6px;font-size:12px;font-weight:500;}
+  .pres-alert.warn{background:var(--gold-bg);color:#7c4a00;}
+  .pres-alert.danger{background:var(--expense-bg);color:var(--expense);}
+  .pres-alert.success{background:var(--income-bg);color:var(--income);}
+  .pres-card-actions{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;}
+  .pres-card-actions button{flex:1;padding:7px 4px;border-radius:6px;border:1px solid var(--line);background:var(--bg);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;color:var(--ink-soft);}
+  .pres-card-actions button:hover{background:var(--line);color:var(--ink);}
+  .pres-card-actions button.danger:hover{background:var(--expense-bg);color:var(--expense);border-color:var(--expense);}
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;}
+  .modal-overlay.hidden{display:none;}
+  .modal{background:var(--paper);border-radius:var(--radius);padding:24px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+  .modal h3{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:0 0 18px;}
+  .modal-footer{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+  .modal-footer .btn-primary{flex:1;}
+  .btn-secondary{flex:1;padding:11px 0;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink-soft);font-family:'Inter',sans-serif;font-weight:600;font-size:14px;cursor:pointer;}
+  .form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:500px){.form-grid2{grid-template-columns:1fr;}}
+  .aporte-row{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid var(--line);font-size:13px;}
+  .aporte-row:last-child{border-bottom:none;}
+  .aporte-row .a-date{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft);width:60px;}
+  .aporte-row .a-comment{flex:1;color:var(--ink-soft);}
+  .aporte-row .a-monto{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--income);}
 </style>
 </head>
 <body>
@@ -282,6 +347,7 @@
   <div class="tabs">
     <button type="button" class="tab-btn active" id="tabMovimientos">Movimientos</button>
     <button type="button" class="tab-btn" id="tabReportes">Reportes</button>
+    <button type="button" class="tab-btn" id="tabPresupuestos">Presupuestos</button>
   </div>
 
   <div id="viewMovimientos">
@@ -513,6 +579,193 @@
 
   </div><!-- /viewReportes -->
 
+  <!-- ═══ PRESUPUESTOS ═══ -->
+  <div id="viewPresupuestos" style="display:none">
+
+    <!-- KPI Dashboard -->
+    <div class="pres-dashboard" id="presKpis"></div>
+
+    <!-- Alertas globales -->
+    <div id="presAlertas" style="margin-bottom:16px;display:flex;flex-direction:column;gap:6px;"></div>
+
+    <!-- Controles -->
+    <div class="pres-controls">
+      <div class="field">
+        <label for="presFiltroCategoria">Categoría</label>
+        <select id="presFiltroCategoria"></select>
+      </div>
+      <div class="field">
+        <label for="presFiltroEstado">Estado</label>
+        <select id="presFiltroEstado">
+          <option value="">Todos</option>
+          <option value="planeado">Planeado</option>
+          <option value="progreso">En progreso</option>
+          <option value="completado">Completado</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="presFiltroPrioridad">Prioridad</label>
+        <select id="presFiltroPrioridad">
+          <option value="">Todas</option>
+          <option value="alta">Alta</option>
+          <option value="media">Media</option>
+          <option value="baja">Baja</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="presOrden">Ordenar por</label>
+        <select id="presOrden">
+          <option value="fechaCreacion">Fecha de creación</option>
+          <option value="fechaObjetivo">Fecha objetivo</option>
+          <option value="monto">Monto objetivo</option>
+          <option value="progreso">Progreso</option>
+        </select>
+      </div>
+      <button class="btn-primary" id="btnNuevoPresupuesto">+ Nuevo presupuesto</button>
+    </div>
+
+    <!-- Tarjetas -->
+    <div class="pres-grid" id="presGrid"></div>
+
+  </div><!-- /viewPresupuestos -->
+
+  <!-- Modal Crear/Editar Presupuesto -->
+  <div class="modal-overlay hidden" id="modalPresupuesto">
+    <div class="modal">
+      <h3 id="modalPresTitle">Nuevo presupuesto</h3>
+      <input type="hidden" id="presEditId">
+
+      <div class="field">
+        <label for="presNombre">Nombre de la meta *</label>
+        <input type="text" id="presNombre" placeholder="Ej. Viaje a Europa, Fondo de emergencia...">
+      </div>
+      <div class="field">
+        <label for="presDescripcion">Descripción (opcional)</label>
+        <input type="text" id="presDescripcion" placeholder="Detalla tu meta...">
+      </div>
+      <div class="form-grid2">
+        <div class="field">
+          <label for="presCategoria">Tipo de meta *</label>
+          <select id="presCategoria"></select>
+        </div>
+        <div class="field">
+          <label for="presPrioridad">Prioridad</label>
+          <select id="presPrioridad">
+            <option value="alta">Alta</option>
+            <option value="media" selected>Media</option>
+            <option value="baja">Baja</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid2">
+        <div class="field">
+          <label for="presMontoObjetivo">Monto objetivo (S/.) *</label>
+          <input type="number" id="presMontoObjetivo" step="0.01" min="0" placeholder="0.00">
+        </div>
+        <div class="field">
+          <label for="presMontoAhorrado">Ya tengo ahorrado (S/.)</label>
+          <input type="number" id="presMontoAhorrado" step="0.01" min="0" placeholder="0.00">
+        </div>
+      </div>
+      <div class="form-grid2">
+        <div class="field">
+          <label for="presFinanciamiento">Forma de financiamiento</label>
+          <select id="presFinanciamiento">
+            <option value="ahorro">Solo ahorro</option>
+            <option value="ahorro-ingresos">Ahorro + ingresos extraordinarios</option>
+            <option value="credito">Crédito</option>
+            <option value="tarjeta">Tarjeta de crédito</option>
+            <option value="combinado">Combinación</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="presEstado">Estado</label>
+          <select id="presEstado">
+            <option value="planeado">Planeado</option>
+            <option value="progreso">En progreso</option>
+            <option value="completado">Completado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Campos de crédito -->
+      <div id="presCreditoFields" style="display:none;border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:12px;background:var(--bg);">
+        <p style="font-size:12px;color:var(--ink-soft);margin:0 0 10px;font-weight:600;">Datos del crédito</p>
+        <div class="form-grid2">
+          <div class="field">
+            <label for="presMontoFinanciado">Monto financiado (S/.)</label>
+            <input type="number" id="presMontoFinanciado" step="0.01" min="0" placeholder="0.00">
+          </div>
+          <div class="field">
+            <label for="presTasaInteres">Tasa de interés anual (%)</label>
+            <input type="number" id="presTasaInteres" step="0.01" min="0" placeholder="12.00">
+          </div>
+        </div>
+        <div class="form-grid2">
+          <div class="field">
+            <label for="presNumCuotas">N° de cuotas</label>
+            <input type="number" id="presNumCuotas" step="1" min="1" placeholder="12">
+          </div>
+          <div class="field">
+            <label for="presPagoMensual">Pago mensual estimado (S/.)</label>
+            <input type="number" id="presPagoMensual" step="0.01" min="0" placeholder="Auto">
+            <small style="color:var(--ink-soft);font-size:11px;">Se calcula automáticamente</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid2">
+        <div class="field">
+          <label for="presFechaObjetivo">Fecha objetivo</label>
+          <input type="date" id="presFechaObjetivo">
+        </div>
+        <div class="field">
+          <label for="presMeses">O plazo en meses</label>
+          <input type="number" id="presMeses" step="1" min="1" placeholder="Ej. 12">
+        </div>
+      </div>
+      <div class="field">
+        <label for="presNotas">Notas (opcional)</label>
+        <textarea id="presNotas" rows="2" placeholder="Cualquier detalle adicional..."></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" id="btnCancelarPres">Cancelar</button>
+        <button class="btn-primary" id="btnGuardarPres">Guardar presupuesto</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Aportes -->
+  <div class="modal-overlay hidden" id="modalAporte">
+    <div class="modal">
+      <h3 id="modalAporteTitle">Registrar aporte</h3>
+      <input type="hidden" id="aportePresId">
+      <div class="field">
+        <label for="aporteDate">Fecha *</label>
+        <input type="date" id="aporteDate">
+      </div>
+      <div class="field">
+        <label for="aporteMonto">Monto (S/.) *</label>
+        <input type="number" id="aporteMonto" step="0.01" min="0" placeholder="0.00">
+      </div>
+      <div class="field">
+        <label for="aporteComment">Comentario (opcional)</label>
+        <input type="text" id="aporteComment" placeholder="Ej. Ahorro de quincena...">
+      </div>
+      <div style="margin-top:14px;">
+        <p style="font-size:12px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;">Historial de aportes</p>
+        <div id="aporteHistorial" style="max-height:180px;overflow-y:auto;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="btnCancelarAporte">Cerrar</button>
+        <button class="btn-primary" id="btnGuardarAporte">Registrar aporte</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
@@ -539,11 +792,13 @@ const docRef = doc(db, "libroDeCuentas", "principal");
 const CAT_INGRESOS = ["Sueldo","Ingreso Extra","Freelance","Regalo","Otros Ingresos"];
 const METODOS = ["Efectivo","Yape","BCP","BBVA","Wardaditos"];
 const CAT_GASTOS = ["Pasajes","Alimentación","Ropa","Vivienda / Alquiler","Servicios (luz, agua, internet)","Entretenimiento","Salud","Educación","Otros Gastos"];
+const CAT_PRESUPUESTOS = ["Viaje","Vehículo","Vivienda","Educación","Tecnología","Salud","Fondo de emergencia","Inversión","Regalo","Negocio","Ropa","Entretenimiento","Otro"];
 
 let entries = [];
 let saldosIniciales = {};
 let debts = [];
 let transfers = [];
+let presupuestos = [];
 let tipoActual = 'ingreso';
 let tipoDeudaActual = 'pagar';
 let firstLoad = true;
@@ -568,7 +823,7 @@ function showToast(msg){
 
 async function persist(){
   try{
-    await setDoc(docRef, { entries, saldosIniciales, debts, transfers, actualizadoEl: new Date().toISOString() });
+    await setDoc(docRef, { entries, saldosIniciales, debts, transfers, presupuestos, actualizadoEl: new Date().toISOString() });
     setSyncStatus('ok', 'Sincronizado');
   }catch(e){
     console.error('Error guardando en Firestore', e);
@@ -584,6 +839,7 @@ onSnapshot(docRef, (snap)=>{
   saldosIniciales = data.saldosIniciales || {};
   debts = data.debts || [];
   transfers = data.transfers || [];
+  presupuestos = data.presupuestos || [];
   setSyncStatus('ok', firstLoad ? 'Conectado' : 'Actualizado desde otro dispositivo');
   firstLoad = false;
   renderAll();
@@ -835,14 +1091,310 @@ function renderDebtList(containerId, list, tipo){
   });
 }
 
-function renderAll(){
-  render();
-  renderAccounts();
-  renderDebts();
-  renderTransfers();
-  if(document.getElementById('viewReportes').style.display !== 'none'){
-    renderReports();
+// ═══════════════════════════════
+// PRESUPUESTOS — lógica de negocio
+// ═══════════════════════════════
+
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function presCalc(p){
+  const objetivo = Number(p.montoObjetivo||0);
+  const ahorrado = (p.aportes||[]).reduce((s,a)=>s+Number(a.monto||0), Number(p.montoAhorradoInicial||0));
+  const faltante = Math.max(0, objetivo - ahorrado);
+  const pct = objetivo > 0 ? Math.min(100, (ahorrado/objetivo)*100) : 0;
+
+  const hoy = new Date();
+  let mesesRestantes = null;
+  let fechaObjetivo = p.fechaObjetivo || null;
+
+  if(p.meses && !p.fechaObjetivo){
+    const creado = new Date(p.creadoEl||hoy);
+    const fObj = new Date(creado);
+    fObj.setMonth(fObj.getMonth() + Number(p.meses));
+    fechaObjetivo = fObj.toISOString().slice(0,10);
   }
+
+  if(fechaObjetivo){
+    const fObj = new Date(fechaObjetivo+'T00:00:00');
+    const diffMs = fObj - hoy;
+    mesesRestantes = Math.ceil(diffMs / (1000*60*60*24*30.44));
+  }
+
+  const ahorroMensualReq = (mesesRestantes && mesesRestantes > 0) ? faltante / mesesRestantes : null;
+
+  // Crédito
+  let pagoMensual = Number(p.pagoMensual||0);
+  if((p.financiamiento==='credito'||p.financiamiento==='tarjeta') && p.montoFinanciado && p.tasaInteres && p.numCuotas){
+    const mf = Number(p.montoFinanciado);
+    const r = (Number(p.tasaInteres)/100)/12;
+    const n = Number(p.numCuotas);
+    if(r > 0){ pagoMensual = mf * (r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1); }
+    else { pagoMensual = mf/n; }
+  }
+
+  // Progreso esperado según tiempo transcurrido
+  let progresoEsperado = null;
+  if(fechaObjetivo && p.creadoEl){
+    const creado = new Date(p.creadoEl);
+    const fObj = new Date(fechaObjetivo+'T00:00:00');
+    const totalMs = fObj - creado;
+    const transcMs = hoy - creado;
+    if(totalMs > 0) progresoEsperado = Math.min(100, (transcMs/totalMs)*100);
+  }
+
+  return { objetivo, ahorrado, faltante, pct, mesesRestantes, fechaObjetivo, ahorroMensualReq, pagoMensual, progresoEsperado };
+}
+
+function presAlertas(p, calc){
+  const alertas = [];
+  const hoy = new Date().toISOString().slice(0,10);
+
+  if(calc.pct >= 100 && p.estado !== 'completado'){
+    alertas.push({tipo:'success', msg:'🎉 ¡Meta alcanzada! Márcala como completada.'});
+  }
+  if(calc.fechaObjetivo && calc.mesesRestantes !== null && calc.mesesRestantes <= 1 && calc.mesesRestantes >= 0 && calc.pct < 100){
+    alertas.push({tipo:'danger', msg:'⚠️ Menos de 30 días para la fecha objetivo y la meta no está completa.'});
+  }
+  if(calc.fechaObjetivo && calc.fechaObjetivo < hoy && calc.pct < 100 && p.estado !== 'cancelado'){
+    alertas.push({tipo:'danger', msg:'🚨 La fecha objetivo ya venció y la meta no se cumplió.'});
+  }
+  if(calc.progresoEsperado !== null && calc.pct < calc.progresoEsperado - 15 && calc.pct < 100){
+    alertas.push({tipo:'warn', msg:`📉 Avance por debajo de lo esperado (esperado: ${calc.progresoEsperado.toFixed(0)}%, actual: ${calc.pct.toFixed(0)}%).`});
+  }
+  return alertas;
+}
+
+function renderPresKpis(){
+  const activos = presupuestos.filter(p=>p.estado!=='cancelado');
+  const totalObjetivo = activos.reduce((s,p)=>s+Number(p.montoObjetivo||0),0);
+  const totalAhorrado = activos.reduce((s,p)=>{
+    const calc = presCalc(p);
+    return s + calc.ahorrado;
+  },0);
+  const totalFaltante = Math.max(0, totalObjetivo - totalAhorrado);
+
+  const conFecha = activos.filter(p=>presCalc(p).fechaObjetivo).sort((a,b)=>{
+    return presCalc(a).fechaObjetivo.localeCompare(presCalc(b).fechaObjetivo);
+  });
+  const proxima = conFecha[0];
+  const mayorAvance = [...activos].sort((a,b)=>presCalc(b).pct - presCalc(a).pct)[0];
+
+  const kpiContainer = document.getElementById('presKpis');
+  kpiContainer.innerHTML = `
+    <div class="pres-kpi"><div class="k-label">Total metas</div><div class="k-val">${presupuestos.length}</div></div>
+    <div class="pres-kpi"><div class="k-label">Comprometido</div><div class="k-val gold">${fmt(totalObjetivo)}</div></div>
+    <div class="pres-kpi"><div class="k-label">Total ahorrado</div><div class="k-val green">${fmt(totalAhorrado)}</div></div>
+    <div class="pres-kpi"><div class="k-label">Pendiente</div><div class="k-val red">${fmt(totalFaltante)}</div></div>
+    <div class="pres-kpi"><div class="k-label">Mayor avance</div><div class="k-val green">${mayorAvance ? mayorAvance.nombre.slice(0,14)+'…' : '—'}</div></div>
+    <div class="pres-kpi"><div class="k-label">Vence pronto</div><div class="k-val gold">${proxima ? proxima.nombre.slice(0,14)+'…' : '—'}</div></div>
+  `;
+
+  // Alertas globales
+  const alertasEl = document.getElementById('presAlertas');
+  alertasEl.innerHTML = '';
+  presupuestos.filter(p=>p.estado!=='cancelado').forEach(p=>{
+    const calc = presCalc(p);
+    presAlertas(p,calc).forEach(a=>{
+      const div = document.createElement('div');
+      div.className = `pres-alert ${a.tipo}`;
+      div.textContent = `[${p.nombre}] ${a.msg}`;
+      alertasEl.appendChild(div);
+    });
+  });
+}
+
+function renderPresGrid(){
+  const filtCat = document.getElementById('presFiltroCategoria').value;
+  const filtEst = document.getElementById('presFiltroEstado').value;
+  const filtPri = document.getElementById('presFiltroPrioridad').value;
+  const orden = document.getElementById('presOrden').value;
+
+  let lista = [...presupuestos];
+  if(filtCat) lista = lista.filter(p=>p.categoria===filtCat);
+  if(filtEst) lista = lista.filter(p=>p.estado===filtEst);
+  if(filtPri) lista = lista.filter(p=>p.prioridad===filtPri);
+
+  lista.sort((a,b)=>{
+    if(orden==='fechaObjetivo'){
+      const fa = presCalc(a).fechaObjetivo||'9999';
+      const fb = presCalc(b).fechaObjetivo||'9999';
+      return fa.localeCompare(fb);
+    }
+    if(orden==='monto') return Number(b.montoObjetivo||0)-Number(a.montoObjetivo||0);
+    if(orden==='progreso') return presCalc(b).pct - presCalc(a).pct;
+    return (b.creadoEl||'').localeCompare(a.creadoEl||'');
+  });
+
+  const grid = document.getElementById('presGrid');
+  grid.innerHTML = '';
+
+  if(lista.length===0){
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1;padding:40px;">No hay presupuestos que coincidan con los filtros. Crea el primero con el botón de arriba.</div>';
+    return;
+  }
+
+  lista.forEach(p=>{
+    const calc = presCalc(p);
+    const alertas = presAlertas(p, calc);
+    const pctColor = calc.pct >= 100 ? '' : calc.pct < 30 ? 'danger' : calc.pct < 60 ? 'warn' : '';
+    const estadoLabel = {planeado:'Planeado',progreso:'En progreso',completado:'Completado',cancelado:'Cancelado'}[p.estado]||p.estado;
+    const priLabel = {alta:'Alta',media:'Media',baja:'Baja'}[p.prioridad]||p.prioridad;
+
+    const card = document.createElement('div');
+    card.className = `pres-card estado-${p.estado}`;
+    card.innerHTML = `
+      <div class="pres-card-header">
+        <div class="pres-card-title">${p.nombre}</div>
+        <div class="pres-card-badges">
+          <span class="badge prioridad-${p.prioridad}">${priLabel}</span>
+          <span class="badge estado-${p.estado}">${estadoLabel}</span>
+        </div>
+      </div>
+      <div><span class="badge cat">${p.categoria}</span>${p.descripcion ? `<span style="font-size:12px;color:var(--ink-soft);margin-left:8px;">${p.descripcion}</span>` : ''}</div>
+
+      <div class="pres-amounts">
+        <div class="pres-amt"><div class="a-lbl">Objetivo</div><div class="a-val">${fmt(calc.objetivo)}</div></div>
+        <div class="pres-amt"><div class="a-lbl">Ahorrado</div><div class="a-val green">${fmt(calc.ahorrado)}</div></div>
+        <div class="pres-amt"><div class="a-lbl">Faltante</div><div class="a-val red">${fmt(calc.faltante)}</div></div>
+      </div>
+
+      <div class="pres-progress-wrap">
+        <div class="pres-progress-label">
+          <span>Progreso</span>
+          <span class="pres-progress-pct">${calc.pct.toFixed(1)}%</span>
+        </div>
+        <div class="pres-progress-track">
+          <div class="pres-progress-fill ${pctColor}" style="width:${Math.min(100,calc.pct)}%"></div>
+        </div>
+      </div>
+
+      <div class="pres-meta">
+        ${calc.fechaObjetivo ? `<span>📅 ${new Date(calc.fechaObjetivo+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit',year:'numeric'})}</span>` : ''}
+        ${calc.mesesRestantes !== null ? `<span>⏳ ${calc.mesesRestantes > 0 ? calc.mesesRestantes+' meses restantes' : 'Vencido'}</span>` : ''}
+        ${calc.ahorroMensualReq !== null && calc.mesesRestantes > 0 ? `<span>💰 Ahorro mensual requerido: ${fmt(calc.ahorroMensualReq)}</span>` : ''}
+        ${calc.pagoMensual > 0 ? `<span>🏦 Cuota estimada: ${fmt(calc.pagoMensual)}</span>` : ''}
+      </div>
+
+      ${alertas.length ? '<div class="pres-alerts">'+alertas.map(a=>`<div class="pres-alert ${a.tipo}">${a.msg}</div>`).join('')+'</div>' : ''}
+
+      <div class="pres-card-actions">
+        <button data-id="${p.id}" data-action="aporte">+ Aporte</button>
+        <button data-id="${p.id}" data-action="editar">Editar</button>
+        <button data-id="${p.id}" data-action="duplicar">Duplicar</button>
+        <button data-id="${p.id}" data-action="eliminar" class="danger">Eliminar</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll('[data-action]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const id = btn.dataset.id;
+      const action = btn.dataset.action;
+      const p = presupuestos.find(x=>x.id===id);
+      if(!p) return;
+
+      if(action==='eliminar'){
+        if(!confirm(`¿Eliminar el presupuesto "${p.nombre}"? Esta acción no se puede deshacer.`)) return;
+        presupuestos = presupuestos.filter(x=>x.id!==id);
+        await save();
+        renderPresupuestos();
+      }
+      if(action==='duplicar'){
+        const copia = {...p, id:uid(), nombre: p.nombre+' (copia)', creadoEl: new Date().toISOString(), aportes:[]};
+        presupuestos.push(copia);
+        await save();
+        renderPresupuestos();
+        showToast('Presupuesto duplicado.');
+      }
+      if(action==='editar') abrirModalPres(p);
+      if(action==='aporte') abrirModalAporte(p);
+    });
+  });
+}
+
+function renderPresupuestos(){
+  renderPresKpis();
+  renderPresGrid();
+}
+
+function abrirModalPres(p){
+  const esEdicion = !!p;
+  document.getElementById('modalPresTitle').textContent = esEdicion ? 'Editar presupuesto' : 'Nuevo presupuesto';
+  document.getElementById('presEditId').value = esEdicion ? p.id : '';
+  document.getElementById('presNombre').value = p?.nombre||'';
+  document.getElementById('presDescripcion').value = p?.descripcion||'';
+  document.getElementById('presCategoria').value = p?.categoria||CAT_PRESUPUESTOS[0];
+  document.getElementById('presPrioridad').value = p?.prioridad||'media';
+  document.getElementById('presMontoObjetivo').value = p?.montoObjetivo||'';
+  document.getElementById('presMontoAhorrado').value = p?.montoAhorradoInicial||'';
+  document.getElementById('presFinanciamiento').value = p?.financiamiento||'ahorro';
+  document.getElementById('presEstado').value = p?.estado||'planeado';
+  document.getElementById('presFechaObjetivo').value = p?.fechaObjetivo||'';
+  document.getElementById('presMeses').value = p?.meses||'';
+  document.getElementById('presNotas').value = p?.notas||'';
+  document.getElementById('presMontoFinanciado').value = p?.montoFinanciado||'';
+  document.getElementById('presTasaInteres').value = p?.tasaInteres||'';
+  document.getElementById('presNumCuotas').value = p?.numCuotas||'';
+  document.getElementById('presPagoMensual').value = p?.pagoMensual||'';
+  toggleCreditoFields();
+  document.getElementById('modalPresupuesto').classList.remove('hidden');
+}
+
+function toggleCreditoFields(){
+  const fin = document.getElementById('presFinanciamiento').value;
+  const show = fin==='credito'||fin==='tarjeta'||fin==='combinado';
+  document.getElementById('presCreditoFields').style.display = show ? '' : 'none';
+}
+
+function calcPagoMensualModal(){
+  const mf = parseFloat(document.getElementById('presMontoFinanciado').value);
+  const tasa = parseFloat(document.getElementById('presTasaInteres').value);
+  const n = parseInt(document.getElementById('presNumCuotas').value);
+  if(!isNaN(mf) && !isNaN(tasa) && !isNaN(n) && n>0){
+    let pago;
+    const r = (tasa/100)/12;
+    if(r>0){ pago = mf*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1); }
+    else { pago = mf/n; }
+    document.getElementById('presPagoMensual').value = pago.toFixed(2);
+  }
+}
+
+function abrirModalAporte(p){
+  document.getElementById('modalAporteTitle').textContent = `Aportes — ${p.nombre}`;
+  document.getElementById('aportePresId').value = p.id;
+  document.getElementById('aporteDate').value = new Date().toISOString().slice(0,10);
+  document.getElementById('aporteMonto').value = '';
+  document.getElementById('aporteComment').value = '';
+  renderAporteHistorial(p);
+  document.getElementById('modalAporte').classList.remove('hidden');
+}
+
+function renderAporteHistorial(p){
+  const container = document.getElementById('aporteHistorial');
+  const aportes = [...(p.aportes||[])].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  if(aportes.length===0){
+    container.innerHTML = '<div class="empty" style="padding:16px;">Sin aportes registrados todavía.</div>';
+    return;
+  }
+  container.innerHTML = aportes.map(a=>`
+    <div class="aporte-row">
+      <div class="a-date">${a.fecha.slice(8,10)}/${a.fecha.slice(5,7)}</div>
+      <div class="a-comment">${a.comentario||'—'}</div>
+      <div class="a-monto">+${fmt(a.monto)}</div>
+      <button style="background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:14px;padding:2px 5px;" data-aporteId="${a.id}" title="Eliminar">✕</button>
+    </div>
+  `).join('');
+  container.querySelectorAll('[data-aporteId]').forEach(btn=>{
+    btn.addEventListener('click', async()=>{
+      const pIdx = presupuestos.findIndex(x=>x.id===p.id);
+      if(pIdx<0) return;
+      presupuestos[pIdx].aportes = (presupuestos[pIdx].aportes||[]).filter(a=>a.id!==btn.dataset.aporteid);
+      await save();
+      renderAporteHistorial(presupuestos[pIdx]);
+      renderPresupuestos();
+    });
+  });
 }
 
 const PALETA = ['#2F7A5C','#7B2D3E','#C98A2C','#24384A','#5B6B62','#9FAE9F','#8FA98F','#B96B7C','#D9A85C','#4A6B84'];
@@ -914,6 +1466,24 @@ function renderReports(){
     }]},
     options:{ plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:false } } }
   });
+}
+
+function renderAll(){
+  render();
+  renderAccounts();
+  renderDebts();
+  renderTransfers();
+  if(document.getElementById("viewReportes").style.display !== "none") renderReports();
+  if(document.getElementById("viewPresupuestos").style.display !== "none") renderPresupuestos();
+}
+
+function switchTab(tab){
+  ["Movimientos","Reportes","Presupuestos"].forEach(t=>{
+    document.getElementById("view"+t).style.display = tab===t ? "" : "none";
+    document.getElementById("tab"+t).classList.toggle("active", tab===t);
+  });
+  if(tab==="Reportes") renderReports();
+  if(tab==="Presupuestos") renderPresupuestos();
 }
 
 async function save(){
@@ -1033,7 +1603,7 @@ function init(){
   });
 
   document.getElementById('btnGenerarRespaldo').addEventListener('click', ()=>{
-    const backup = { entries, saldosIniciales, debts, transfers, generadoEl: new Date().toISOString() };
+    const backup = { entries, saldosIniciales, debts, transfers, presupuestos, generadoEl: new Date().toISOString() };
     document.getElementById('backupText').value = JSON.stringify(backup);
     showToast('Respaldo generado. Selecciona el texto y cópialo a un lugar seguro.');
   });
@@ -1050,26 +1620,118 @@ function init(){
     saldosIniciales = backup.saldosIniciales || {};
     debts = Array.isArray(backup.debts) ? backup.debts : [];
     transfers = Array.isArray(backup.transfers) ? backup.transfers : [];
+    presupuestos = Array.isArray(backup.presupuestos) ? backup.presupuestos : [];
 
     await save();
     renderAll();
     showToast('Datos restaurados desde el respaldo.');
   });
 
-  document.getElementById('tabMovimientos').addEventListener('click', ()=>{
-    document.getElementById('viewMovimientos').style.display = '';
-    document.getElementById('viewReportes').style.display = 'none';
-    document.getElementById('tabMovimientos').classList.add('active');
-    document.getElementById('tabReportes').classList.remove('active');
-  });
-  document.getElementById('tabReportes').addEventListener('click', ()=>{
-    document.getElementById('viewMovimientos').style.display = 'none';
-    document.getElementById('viewReportes').style.display = '';
-    document.getElementById('tabReportes').classList.add('active');
-    document.getElementById('tabMovimientos').classList.remove('active');
-    renderReports();
-  });
+  document.getElementById('tabMovimientos').addEventListener('click', ()=>switchTab('Movimientos'));
+  document.getElementById('tabReportes').addEventListener('click', ()=>switchTab('Reportes'));
+  document.getElementById('tabPresupuestos').addEventListener('click', ()=>switchTab('Presupuestos'));
   document.getElementById('yearSelect').addEventListener('change', renderReports);
+
+  // Presupuestos — filtros y orden
+  ['presFiltroCategoria','presFiltroEstado','presFiltroPrioridad','presOrden'].forEach(id=>{
+    document.getElementById(id).addEventListener('change', renderPresGrid);
+  });
+
+  // Modal Presupuesto — abrir/cerrar
+  document.getElementById('btnNuevoPresupuesto').addEventListener('click', ()=>abrirModalPres(null));
+  document.getElementById('btnCancelarPres').addEventListener('click', ()=>{
+    document.getElementById('modalPresupuesto').classList.add('hidden');
+  });
+  document.getElementById('presFinanciamiento').addEventListener('change', ()=>{
+    toggleCreditoFields();
+  });
+  ['presMontoFinanciado','presTasaInteres','presNumCuotas'].forEach(id=>{
+    document.getElementById(id).addEventListener('input', calcPagoMensualModal);
+  });
+
+  // Modal Presupuesto — guardar
+  document.getElementById('btnGuardarPres').addEventListener('click', async()=>{
+    const nombre = document.getElementById('presNombre').value.trim();
+    const montoObjetivo = parseFloat(document.getElementById('presMontoObjetivo').value);
+    if(!nombre){ alert('El nombre de la meta es obligatorio.'); return; }
+    if(isNaN(montoObjetivo)||montoObjetivo<=0){ alert('Ingresa un monto objetivo válido (mayor a 0).'); return; }
+
+    const editId = document.getElementById('presEditId').value;
+    const fechaObj = document.getElementById('presFechaObjetivo').value;
+    const meses = document.getElementById('presMeses').value;
+
+    const data = {
+      id: editId || uid(),
+      nombre,
+      descripcion: document.getElementById('presDescripcion').value.trim(),
+      categoria: document.getElementById('presCategoria').value,
+      prioridad: document.getElementById('presPrioridad').value,
+      montoObjetivo,
+      montoAhorradoInicial: parseFloat(document.getElementById('presMontoAhorrado').value)||0,
+      financiamiento: document.getElementById('presFinanciamiento').value,
+      estado: document.getElementById('presEstado').value,
+      fechaObjetivo: fechaObj||null,
+      meses: meses ? parseInt(meses) : null,
+      notas: document.getElementById('presNotas').value.trim(),
+      montoFinanciado: parseFloat(document.getElementById('presMontoFinanciado').value)||null,
+      tasaInteres: parseFloat(document.getElementById('presTasaInteres').value)||null,
+      numCuotas: parseInt(document.getElementById('presNumCuotas').value)||null,
+      pagoMensual: parseFloat(document.getElementById('presPagoMensual').value)||null,
+      creadoEl: editId ? (presupuestos.find(p=>p.id===editId)?.creadoEl||new Date().toISOString()) : new Date().toISOString(),
+      aportes: editId ? (presupuestos.find(p=>p.id===editId)?.aportes||[]) : [],
+    };
+
+    if(editId){
+      const idx = presupuestos.findIndex(p=>p.id===editId);
+      if(idx>=0) presupuestos[idx]=data; else presupuestos.push(data);
+    } else {
+      presupuestos.push(data);
+    }
+
+    await save();
+    document.getElementById('modalPresupuesto').classList.add('hidden');
+    renderPresupuestos();
+    showToast(editId ? 'Presupuesto actualizado.' : 'Presupuesto creado.');
+  });
+
+  // Modal Aportes
+  document.getElementById('btnCancelarAporte').addEventListener('click', ()=>{
+    document.getElementById('modalAporte').classList.add('hidden');
+  });
+  document.getElementById('btnGuardarAporte').addEventListener('click', async()=>{
+    const presId = document.getElementById('aportePresId').value;
+    const fecha = document.getElementById('aporteDate').value;
+    const monto = parseFloat(document.getElementById('aporteMonto').value);
+    if(!fecha||isNaN(monto)||monto<=0){ alert('Ingresa una fecha y un monto válido.'); return; }
+
+    const idx = presupuestos.findIndex(p=>p.id===presId);
+    if(idx<0) return;
+    if(!presupuestos[idx].aportes) presupuestos[idx].aportes=[];
+    presupuestos[idx].aportes.push({
+      id: uid(), fecha, monto, comentario: document.getElementById('aporteComment').value.trim()
+    });
+    // Auto-actualizar estado si llegó al 100%
+    const calc = presCalc(presupuestos[idx]);
+    if(calc.pct >= 100 && presupuestos[idx].estado === 'progreso'){
+      presupuestos[idx].estado = 'completado';
+      showToast('🎉 ¡Meta completada! Se marcó automáticamente.');
+    } else if(presupuestos[idx].estado === 'planeado'){
+      presupuestos[idx].estado = 'progreso';
+    }
+
+    await save();
+    document.getElementById('aporteMonto').value='';
+    document.getElementById('aporteComment').value='';
+    renderAporteHistorial(presupuestos[idx]);
+    renderPresupuestos();
+    showToast('Aporte registrado.');
+  });
+
+  // Poblar selects de presupuestos
+  fillSelect(document.getElementById('presCategoria'), CAT_PRESUPUESTOS);
+  const filtCatSel = document.getElementById('presFiltroCategoria');
+  filtCatSel.innerHTML = '<option value="">Todas</option>';
+  CAT_PRESUPUESTOS.forEach(c=>{ const o=document.createElement('option');o.value=c;o.textContent=c;filtCatSel.appendChild(o); });
 
   document.getElementById('btnExportExcel').addEventListener('click', ()=>{
     if(entries.length === 0){ alert('Todavía no tienes movimientos para exportar.'); return; }
@@ -1098,6 +1760,7 @@ function init(){
       saldosIniciales = {};
       debts = [];
       transfers = [];
+      presupuestos = [];
       await save();
       renderAll();
     }
