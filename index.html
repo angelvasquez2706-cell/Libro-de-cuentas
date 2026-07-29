@@ -2113,6 +2113,16 @@ function renderTarjetaBCP(){
   document.getElementById('cardDisponible').textContent = fmt(disponible);
   document.getElementById('cardCashback').textContent = fmt(cashback);
 
+  // Re-populate retiroCuenta preserving current selection
+  const retiroCuentaEl = document.getElementById('retiroCuenta');
+  const prevRetiroCuenta = retiroCuentaEl.value;
+  const cuentasValidas = METODOS.filter(m=>!m.includes('crédito'));
+  if(retiroCuentaEl.options.length !== cuentasValidas.length){
+    fillSelect(retiroCuentaEl, cuentasValidas);
+  }
+  if(prevRetiroCuenta) retiroCuentaEl.value = prevRetiroCuenta;
+  if(!retiroCuentaEl.value) retiroCuentaEl.value = cuentasValidas[0];
+
   // Populate config fields
   document.getElementById('cardDigits').value = cfg.digits || '';
   document.getElementById('cardLineaInput').value = cfg.linea || '';
@@ -2515,8 +2525,9 @@ function init(){
   // ── Tarjeta BCP ──
   fillSelect(document.getElementById('tcCat'), CAT_GASTOS);
   fillSelect(document.getElementById('pagTCMetodo'), METODOS.filter(m=>!m.includes('crédito')));
-  fillSelect(document.getElementById('retiroCuenta'), METODOS.filter(m=>!m.includes('crédito')));
-  document.getElementById('retiroFecha').value = new Date().toISOString().slice(0,10);
+  // retiroCuenta is handled inside renderTarjetaBCP to preserve value across re-renders
+  const retiroFechaEl = document.getElementById('retiroFecha');
+  if(!retiroFechaEl.value) retiroFechaEl.value = new Date().toISOString().slice(0,10);
   document.getElementById('tcFecha').value = new Date().toISOString().slice(0,10);
   document.getElementById('cbFecha').value = new Date().toISOString().slice(0,10);
   document.getElementById('pagTCFecha').value = new Date().toISOString().slice(0,10);
@@ -2677,7 +2688,10 @@ function init(){
     document.getElementById('retiroPreview').style.display = 'none';
 
     await save();
-    renderAll();
+    // Refresh only accounts and tarjeta panel — don't reset the whole UI
+    renderAccounts();
+    renderTarjetaBCP();
+    render(); // update movimientos ledger since we added entries
     showToast(`Retiro registrado: deuda +${fmt(monto)} · ${cuenta} +${fmt(neto)}${comision > 0 ? ` · comisión ${fmt(comision)}` : ''}`);
   });
   document.getElementById('yearSelect').addEventListener('change', renderReports);
