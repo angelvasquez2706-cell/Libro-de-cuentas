@@ -281,6 +281,13 @@
   .cuota-card-meta{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
   .cuota-progress{height:8px;background:rgba(0,0,0,0.4);border-radius:5px;overflow:hidden;margin:8px 0;}
   .cuota-progress-fill{height:100%;background:var(--navy);border-radius:5px;box-shadow:0 0 8px rgba(108,92,231,0.6);}
+  .retiro-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:640px){.retiro-grid{grid-template-columns:1fr;}}
+  .retiro-preview{grid-column:1/-1;background:rgba(8,10,22,0.5);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;}
+  .rp-row{font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .rp-row.expense{color:var(--expense);}
+  .rp-row.income{color:var(--income);}
+  .rp-row.warn{color:var(--gold);}
 
   .transfer-block{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line);}
   .transfer-form{
@@ -830,13 +837,6 @@
       <div class="card">
         <h2>Próximo ciclo</h2>
         <div id="cardCicloInfo" class="empty">Configura la fecha de corte para ver el ciclo.</div>
-        <div style="margin-top:16px;">
-          <h2>Aplicar cashback a deuda</h2>
-          <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">Usa tu cashback acumulado para reducir la deuda de tu tarjeta.</p>
-          <div class="field"><label>Monto a aplicar (S/.)</label><input type="number" id="cashbackAplicarMonto" step="0.01" min="0" placeholder="0.00"></div>
-          <div class="field"><label>Fecha</label><input type="date" id="cashbackAplicarFecha"></div>
-          <button class="btn-primary" id="btnAplicarCashback" style="background:linear-gradient(135deg,#C98A2C,#FFD700);box-shadow:0 4px 0 #8a5c0a,0 8px 20px rgba(255,215,0,0.3);">Aplicar cashback → deuda</button>
-        </div>
       </div>
     </div>
 
@@ -867,17 +867,27 @@
         <button class="btn-primary" id="btnAgregarGastoTC">Registrar gasto</button>
       </div>
 
+
       <div class="card">
-        <h2>Registrar cashback recibido</h2>
-        <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">Cada vez que el banco te abone cashback, regístralo aquí.</p>
-        <div class="field"><label>Fecha</label><input type="date" id="cbFecha"></div>
-        <div class="field"><label>Monto de cashback (S/.)</label><input type="number" id="cbMonto" step="0.01" min="0" placeholder="0.00"></div>
+        <h2>Cashback</h2>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">Registra el monto que el banco te abonó. Luego puedes aplicarlo directamente a tu deuda.</p>
+        <div class="field"><label>Fecha del abono</label><input type="date" id="cbFecha"></div>
+        <div class="field"><label>Monto recibido (S/.)</label><input type="number" id="cbMonto" step="0.01" min="0" placeholder="0.00"></div>
         <div class="field"><label>Descripción (opcional)</label><input type="text" id="cbDesc" placeholder="Ej. Cashback marzo, bono bienvenida..."></div>
-        <button class="btn-primary" id="btnRegistrarCashback" style="background:linear-gradient(135deg,#C98A2C,#FFD700);box-shadow:0 4px 0 #8a5c0a,0 8px 20px rgba(255,215,0,0.3);">Registrar cashback</button>
+        <button class="btn-primary" id="btnRegistrarCashback" style="background:linear-gradient(135deg,#C98A2C,#FFD700);box-shadow:0 4px 0 #8a5c0a,0 8px 20px rgba(255,215,0,0.3);color:#1a0a00;">+ Registrar cashback</button>
+
+        <div id="cashbackResumen" style="margin-top:14px;padding:12px 14px;background:rgba(255,198,92,0.08);border:1px solid rgba(255,198,92,0.25);border-radius:10px;display:none;">
+          <div style="font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Cashback disponible</div>
+          <div id="cashbackDisponibleDisplay" style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:24px;color:var(--gold);margin-bottom:12px;">S/ 0.00</div>
+          <div class="field" style="margin-bottom:6px;"><label>Monto a pagar con cashback</label><input type="number" id="cashbackAplicarMonto" step="0.01" min="0" placeholder="0.00"></div>
+          <div class="field" style="margin-bottom:8px;"><label>Fecha de aplicación</label><input type="date" id="cashbackAplicarFecha"></div>
+          <button class="btn-primary" id="btnAplicarCashback" style="background:linear-gradient(135deg,#C98A2C,#FFD700);box-shadow:0 4px 0 #8a5c0a,0 8px 20px rgba(255,215,0,0.3);color:#1a0a00;padding:9px 0;">Usar cashback para pagar deuda</button>
+          <div id="cashbackHistorial" style="margin-top:12px;"></div>
+        </div>
 
         <div style="margin-top:20px;padding-top:16px;border-top:1px dashed var(--line);">
-          <h2>Registrar pago a tarjeta</h2>
-          <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">Cada vez que pagues tu tarjeta desde tu cuenta bancaria.</p>
+          <h2>Pagar tarjeta desde cuenta</h2>
+          <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">Registra cuando pagas la deuda de tu tarjeta desde tu cuenta bancaria.</p>
           <div class="field"><label>Fecha</label><input type="date" id="pagTCFecha"></div>
           <div class="field"><label>Monto pagado (S/.)</label><input type="number" id="pagTCMonto" step="0.01" min="0" placeholder="0.00"></div>
           <div class="field"><label>Cuenta de origen</label><select id="pagTCMetodo"></select></div>
@@ -885,6 +895,45 @@
         </div>
       </div>
     </div>
+
+    <!-- Retiro con tarjeta -->
+    <section class="block">
+      <div class="card">
+        <h2>💸 Retiro con tarjeta (Agora/Sip u otro)</h2>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 14px;">
+          Cuando sacas efectivo o transfieres usando tu tarjeta de crédito. Registra el retiro completo aquí y el sistema hará <strong>3 movimientos automáticos</strong>:
+          suma la deuda a la tarjeta, ingresa el neto a tu cuenta destino, y registra la comisión como gasto.
+        </p>
+        <div class="retiro-grid">
+          <div class="field">
+            <label>Fecha</label>
+            <input type="date" id="retiroFecha">
+          </div>
+          <div class="field">
+            <label>Monto retirado / total cobrado por BCP (S/.)</label>
+            <input type="number" id="retiroMonto" step="0.01" min="0" placeholder="Ej. 500.00">
+          </div>
+          <div class="field">
+            <label>Comisión cobrada (S/.)</label>
+            <input type="number" id="retiroComision" step="0.01" min="0" placeholder="Ej. 10.00">
+          </div>
+          <div class="field">
+            <label>Cuenta destino (donde entra el neto)</label>
+            <select id="retiroCuenta"></select>
+          </div>
+          <div class="field">
+            <label>Descripción</label>
+            <input type="text" id="retiroDesc" placeholder="Ej. Retiro Agora, avance efectivo...">
+          </div>
+          <div class="retiro-preview" id="retiroPreview" style="display:none;">
+            <div class="rp-row expense">➕ Deuda tarjeta BCP: <strong id="rpDeuda">S/ 0.00</strong></div>
+            <div class="rp-row income">💰 Ingresa a <span id="rpCuenta">—</span>: <strong id="rpNeto">S/ 0.00</strong></div>
+            <div class="rp-row warn">💸 Gasto comisión: <strong id="rpComision">S/ 0.00</strong></div>
+          </div>
+        </div>
+        <button class="btn-primary" id="btnRegistrarRetiro" style="margin-top:12px;">Registrar retiro automático</button>
+      </div>
+    </section>
 
     <!-- Movimientos de la tarjeta -->
     <section class="block">
@@ -896,6 +945,7 @@
             <select id="tcFilterTipo" style="padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:rgba(8,10,22,0.55);color:var(--ink);font-size:13px;">
               <option value="">Todos</option>
               <option value="gasto">Gastos</option>
+              <option value="retiro">Retiros</option>
               <option value="pago">Pagos</option>
               <option value="cashback">Cashback</option>
             </select>
@@ -1175,7 +1225,7 @@ let saldosIniciales = {};
 let debts = [];
 let transfers = [];
 let presupuestos = [];
-let cardBCP = { config:{}, movimientos:[], cashbacks:[], pagos:[] };
+let cardBCP = { config:{}, movimientos:[], cashbacks:[], pagos:[], retiros:[] };
 
 // Filtros de movimientos
 let filterTipo = '';
@@ -1221,7 +1271,7 @@ onSnapshot(docRef, (snap)=>{
   debts = data.debts || [];
   transfers = data.transfers || [];
   presupuestos = data.presupuestos || [];
-  cardBCP = data.cardBCP || { config:{}, movimientos:[], cashbacks:[], pagos:[] };
+  cardBCP = data.cardBCP || { config:{}, movimientos:[], cashbacks:[], pagos:[], retiros:[] };
   setSyncStatus('ok', firstLoad ? 'Conectado' : 'Actualizado desde otro dispositivo');
   firstLoad = false;
   renderAll();
@@ -2039,9 +2089,10 @@ function calcCuotaMensual(monto, tasaAnual, numCuotas){
 
 function tcTotalDeuda(){
   const gastos = (cardBCP.movimientos||[]).reduce((s,m)=>s+Number(m.monto||0),0);
+  const retiros = (cardBCP.retiros||[]).reduce((s,r)=>s+Number(r.monto||0),0);
   const pagados = (cardBCP.pagos||[]).reduce((s,p)=>s+Number(p.monto||0),0);
   const cashbackUsado = (cardBCP.cashbacks||[]).filter(c=>c.aplicado).reduce((s,c)=>s+Number(c.monto||0),0);
-  return Math.max(0, gastos - pagados - cashbackUsado);
+  return Math.max(0, gastos + retiros - pagados - cashbackUsado);
 }
 
 function tcCashbackDisponible(){
@@ -2115,10 +2166,25 @@ function renderTarjetaBCP(){
   // Merge all tc movements for display
   const allRows = [
     ...(cardBCP.movimientos||[]).map(m=>({...m, _tipo:'gasto'})),
+    ...(cardBCP.retiros||[]).map(r=>({...r, _tipo:'retiro'})),
     ...(cardBCP.cashbacks||[]).map(c=>({...c, _tipo: c.aplicado ? 'aplicado' : 'cashback'})),
     ...(cardBCP.pagos||[]).map(p=>({...p, _tipo:'pago'}))
   ].filter(r=> (!selectedMes || r.fecha.startsWith(selectedMes)) && (!selectedTipo || r._tipo===selectedTipo))
    .sort((a,b)=>b.fecha.localeCompare(a.fecha));
+
+  // Update cashback resumen panel
+  const cbDisp = tcCashbackDisponible();
+  const cbResumenEl = document.getElementById('cashbackResumen');
+  cbResumenEl.style.display = (cardBCP.cashbacks||[]).length > 0 ? '' : 'none';
+  document.getElementById('cashbackDisponibleDisplay').textContent = fmt(cbDisp);
+  // Cashback historial
+  const cbHist = document.getElementById('cashbackHistorial');
+  const cbList = (cardBCP.cashbacks||[]).slice().sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  cbHist.innerHTML = cbList.length ? cbList.map(c=>`
+    <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--line);color:${c.aplicado?'var(--ink-soft)':'var(--gold)'}">
+      <span>${c.fecha.slice(8,10)}/${c.fecha.slice(5,7)} · ${c.descripcion||'Cashback'}${c.aplicado?' ✓ aplicado':''}</span>
+      <span style="font-family:monospace">${fmt(c.monto)}</span>
+    </div>`).join('') : '';
 
   const tcLedger = document.getElementById('tcLedger');
   if(allRows.length === 0){
@@ -2129,7 +2195,7 @@ function renderTarjetaBCP(){
       const row = document.createElement('div');
       row.className = 'tc-row';
       const day = r.fecha.slice(8,10)+'/'+r.fecha.slice(5,7);
-      const badgeLabel = {gasto:'Gasto',cashback:'Cashback',aplicado:'CB aplicado',pago:'Pago'}[r._tipo] || r._tipo;
+      const badgeLabel = {gasto:'Gasto',retiro:'Retiro',cashback:'Cashback',aplicado:'CB aplicado',pago:'Pago'}[r._tipo] || r._tipo;
       const amtSign = r._tipo==='gasto' ? '-' : '+';
       const amtClass = r._tipo==='gasto' ? 'expense' : (r._tipo==='pago'||r._tipo==='cashback'||r._tipo==='aplicado' ? 'income' : '');
       const cuotaBadge = r.cuotas > 1 ? `<span class="tc-badge cuotas">${r.cuotas}c</span>` : '';
@@ -2146,6 +2212,7 @@ function renderTarjetaBCP(){
         const id = btn.dataset.delid;
         const tipo = btn.dataset.deltype;
         if(tipo==='gasto') cardBCP.movimientos = (cardBCP.movimientos||[]).filter(m=>m.id!==id);
+        else if(tipo==='retiro') cardBCP.retiros = (cardBCP.retiros||[]).filter(r=>r.id!==id);
         else if(tipo==='cashback'||tipo==='aplicado') cardBCP.cashbacks = (cardBCP.cashbacks||[]).filter(c=>c.id!==id);
         else if(tipo==='pago') cardBCP.pagos = (cardBCP.pagos||[]).filter(p=>p.id!==id);
         await save(); renderTarjetaBCP();
@@ -2448,6 +2515,8 @@ function init(){
   // ── Tarjeta BCP ──
   fillSelect(document.getElementById('tcCat'), CAT_GASTOS);
   fillSelect(document.getElementById('pagTCMetodo'), METODOS.filter(m=>!m.includes('crédito')));
+  fillSelect(document.getElementById('retiroCuenta'), METODOS.filter(m=>!m.includes('crédito')));
+  document.getElementById('retiroFecha').value = new Date().toISOString().slice(0,10);
   document.getElementById('tcFecha').value = new Date().toISOString().slice(0,10);
   document.getElementById('cbFecha').value = new Date().toISOString().slice(0,10);
   document.getElementById('pagTCFecha').value = new Date().toISOString().slice(0,10);
@@ -2552,6 +2621,65 @@ function init(){
 
   document.getElementById('tcFilterMes').addEventListener('change', renderTarjetaBCP);
   document.getElementById('tcFilterTipo').addEventListener('change', renderTarjetaBCP);
+
+  function updateRetiroPreview(){
+    const monto = parseFloat(document.getElementById('retiroMonto').value)||0;
+    const comision = parseFloat(document.getElementById('retiroComision').value)||0;
+    const cuenta = document.getElementById('retiroCuenta').value;
+    const neto = Math.max(0, monto - comision);
+    const preview = document.getElementById('retiroPreview');
+    if(monto > 0){
+      preview.style.display = '';
+      document.getElementById('rpDeuda').textContent = fmt(monto);
+      document.getElementById('rpCuenta').textContent = cuenta;
+      document.getElementById('rpNeto').textContent = fmt(neto);
+      document.getElementById('rpComision').textContent = fmt(comision);
+    } else {
+      preview.style.display = 'none';
+    }
+  }
+  document.getElementById('retiroMonto').addEventListener('input', updateRetiroPreview);
+  document.getElementById('retiroComision').addEventListener('input', updateRetiroPreview);
+  document.getElementById('retiroCuenta').addEventListener('change', updateRetiroPreview);
+
+  document.getElementById('btnRegistrarRetiro').addEventListener('click', async()=>{
+    const fecha = document.getElementById('retiroFecha').value;
+    const monto = parseFloat(document.getElementById('retiroMonto').value);
+    const comision = parseFloat(document.getElementById('retiroComision').value)||0;
+    const cuenta = document.getElementById('retiroCuenta').value;
+    const desc = document.getElementById('retiroDesc').value.trim() || 'Retiro con tarjeta';
+    if(!fecha || isNaN(monto) || monto <= 0){ alert('Ingresa fecha y monto del retiro.'); return; }
+    const neto = monto - comision;
+
+    // 1. Suma deuda a tarjeta BCP
+    if(!cardBCP.retiros) cardBCP.retiros = [];
+    cardBCP.retiros.push({ id:uid(), fecha, monto, comision, cuenta, desc });
+
+    // 2. Ingreso neto en cuenta destino (en Movimientos general)
+    entries.push({
+      id: uid(), date: fecha, type: 'ingreso',
+      category: 'Ingreso Extra', method: cuenta,
+      description: `${desc} (neto recibido)`, amount: neto
+    });
+
+    // 3. Gasto de comisión en Movimientos general (método = Tarjeta de crédito BCP)
+    if(comision > 0){
+      entries.push({
+        id: uid(), date: fecha, type: 'gasto',
+        category: 'Servicios (luz, agua, internet)', method: 'Tarjeta de crédito BCP',
+        description: `Comisión — ${desc}`, amount: comision
+      });
+    }
+
+    document.getElementById('retiroMonto').value = '';
+    document.getElementById('retiroComision').value = '';
+    document.getElementById('retiroDesc').value = '';
+    document.getElementById('retiroPreview').style.display = 'none';
+
+    await save();
+    renderAll();
+    showToast(`Retiro registrado: deuda +${fmt(monto)} · ${cuenta} +${fmt(neto)}${comision > 0 ? ` · comisión ${fmt(comision)}` : ''}`);
+  });
   document.getElementById('yearSelect').addEventListener('change', renderReports);
 
   // Presupuestos — filtros y orden
