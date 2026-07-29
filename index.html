@@ -212,6 +212,76 @@
     display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:15px;
   }
 
+  /* ── FILTER BAR ── */
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .filter-bar select{
+    padding:7px 10px;border:1px solid var(--line);border-radius:7px;
+    background:rgba(8,10,22,0.55);color:var(--ink);font-size:12.5px;font-family:'Inter',sans-serif;
+    flex:1;min-width:120px;
+  }
+  .filter-bar select option{background:#14162a;}
+  .filter-bar button{
+    padding:7px 12px;border:1px solid var(--expense);border-radius:7px;
+    background:var(--expense-bg);color:var(--expense);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;
+  }
+
+  /* ── CREDIT CARD HERO ── */
+  .card-hero{
+    display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:center;margin-bottom:22px;
+  }
+  @media(max-width:700px){.card-hero{grid-template-columns:1fr;}}
+  .card-visual{
+    background:linear-gradient(135deg,#1a0533 0%,#2d0f5e 40%,#0f1e5e 100%);
+    border:1px solid rgba(160,130,255,0.35);border-radius:18px;padding:28px 24px;
+    min-height:190px;position:relative;overflow:hidden;
+    box-shadow:0 8px 32px rgba(108,92,231,0.45),0 0 60px rgba(108,92,231,0.15),inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .card-visual::before{
+    content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle,rgba(108,92,231,0.3),transparent 70%);
+    top:-80px;right:-60px;pointer-events:none;
+  }
+  .card-chip{
+    width:42px;height:32px;border-radius:6px;
+    background:linear-gradient(135deg,#d4a843,#f7e098,#c8962c);
+    margin-bottom:32px;box-shadow:0 2px 6px rgba(0,0,0,0.4);
+  }
+  .card-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:4px;}
+  .card-bank{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.01em;margin-bottom:16px;}
+  .card-numbers{font-family:'JetBrains Mono',monospace;font-size:15px;color:rgba(255,255,255,0.8);letter-spacing:.15em;}
+  .card-stats{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;
+    backdrop-filter:blur(18px);
+  }
+  .card-stat .cs-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
+  .card-stat .cs-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;color:var(--ink);}
+  .card-stat .cs-val.expense{color:var(--expense);}
+  .card-stat .cs-val.income{color:var(--income);}
+  .card-stat .cs-val.gold{color:var(--gold);}
+  .tc-row{
+    display:grid;grid-template-columns:60px 1fr auto auto;gap:10px;align-items:center;
+    padding:10px 4px;border-bottom:1px solid var(--line);font-size:13px;
+  }
+  .tc-row:last-child{border-bottom:none;}
+  .tc-row .tc-date{font-family:'JetBrains Mono',monospace;color:var(--ink-soft);font-size:11.5px;}
+  .tc-row .tc-desc small{display:block;color:var(--ink-soft);font-size:11px;margin-top:1px;}
+  .tc-badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;text-transform:uppercase;margin-left:6px;vertical-align:middle;}
+  .tc-badge.gasto{background:var(--expense-bg);color:var(--expense);}
+  .tc-badge.cashback{background:var(--gold-bg);color:var(--gold);}
+  .tc-badge.pago{background:var(--income-bg);color:var(--income);}
+  .tc-badge.aplicado{background:rgba(255,215,0,0.15);color:#FFD700;}
+  .tc-badge.cuotas{background:rgba(108,92,231,0.2);color:#C6BCFF;}
+  .cuota-card{
+    background:rgba(8,10,22,0.5);border:1px solid var(--line);border-radius:10px;
+    padding:14px;margin-bottom:12px;
+  }
+  .cuota-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;}
+  .cuota-card-title{font-weight:600;font-size:14px;}
+  .cuota-card-meta{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+  .cuota-progress{height:8px;background:rgba(0,0,0,0.4);border-radius:5px;overflow:hidden;margin:8px 0;}
+  .cuota-progress-fill{height:100%;background:var(--navy);border-radius:5px;box-shadow:0 0 8px rgba(108,92,231,0.6);}
+
   .transfer-block{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line);}
   .transfer-form{
     display:grid;grid-template-columns: 1fr 1fr 130px 150px;gap:12px;align-items:end;
@@ -427,6 +497,7 @@
     <button type="button" class="tab-btn" id="tabReportes">Reportes</button>
     <button type="button" class="tab-btn" id="tabDeudasCobrar">Deudas por Cobrar</button>
     <button type="button" class="tab-btn" id="tabDeudasPagar">Deudas por Pagar</button>
+    <button type="button" class="tab-btn" id="tabTarjetaBCP">💳 Tarjeta BCP</button>
     <button type="button" class="tab-btn" id="tabPresupuestos">Presupuestos</button>
   </div>
 
@@ -482,6 +553,12 @@
     <div class="card">
       <div class="ledger-head">
         <h2 id="ledgerTitle">Movimientos</h2>
+      </div>
+      <div class="filter-bar" id="filterBar">
+        <select id="filterTipo"><option value="">Tipo: Todos</option><option value="ingreso">Ingresos</option><option value="gasto">Gastos</option></select>
+        <select id="filterMetodo"><option value="">Método: Todos</option></select>
+        <select id="filterCat"><option value="">Categoría: Todas</option></select>
+        <button id="btnClearFilters" title="Limpiar filtros">✕ Limpiar</button>
       </div>
       <div class="ledger-list" id="ledgerList">
         <div class="empty">Cargando...</div>
@@ -706,6 +783,146 @@
       </div>
     </section>
   </div><!-- /viewDeudasPagar -->
+
+  <!-- ═══ TARJETA BCP ═══ -->
+  <div id="viewTarjetaBCP" style="display:none">
+
+    <!-- Hero resumen tarjeta -->
+    <div class="card-hero">
+      <div class="card-visual">
+        <div class="card-chip"></div>
+        <div class="card-label">Tarjeta de Crédito</div>
+        <div class="card-bank">BCP</div>
+        <div class="card-numbers">•••• •••• •••• <span id="card4digits">——</span></div>
+      </div>
+      <div class="card-stats">
+        <div class="card-stat">
+          <div class="cs-label">Línea de crédito</div>
+          <div class="cs-val" id="cardLinea">S/ 0.00</div>
+        </div>
+        <div class="card-stat">
+          <div class="cs-label">Deuda actual</div>
+          <div class="cs-val expense" id="cardDeuda">S/ 0.00</div>
+        </div>
+        <div class="card-stat">
+          <div class="cs-label">Disponible</div>
+          <div class="cs-val income" id="cardDisponible">S/ 0.00</div>
+        </div>
+        <div class="card-stat">
+          <div class="cs-label">Cashback acumulado</div>
+          <div class="cs-val gold" id="cardCashback">S/ 0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Config rápida -->
+    <div class="grid2 block">
+      <div class="card">
+        <h2>Configuración de la tarjeta</h2>
+        <div class="field"><label>Últimos 4 dígitos (referencia)</label><input type="text" id="cardDigits" maxlength="4" placeholder="1234"></div>
+        <div class="field"><label>Línea de crédito total (S/.)</label><input type="number" id="cardLineaInput" step="0.01" min="0" placeholder="0.00"></div>
+        <div class="field"><label>Fecha de corte (día del mes)</label><input type="number" id="cardFechaCorte" min="1" max="31" placeholder="Ej. 15"></div>
+        <div class="field"><label>Fecha de pago (día del mes)</label><input type="number" id="cardFechaPago" min="1" max="31" placeholder="Ej. 5"></div>
+        <div class="field"><label>% de cashback (si lo conoces)</label><input type="number" id="cardPctCashback" step="0.01" min="0" max="100" placeholder="Ej. 1.5"></div>
+        <button class="btn-primary" id="btnGuardarConfig">Guardar configuración</button>
+      </div>
+
+      <div class="card">
+        <h2>Próximo ciclo</h2>
+        <div id="cardCicloInfo" class="empty">Configura la fecha de corte para ver el ciclo.</div>
+        <div style="margin-top:16px;">
+          <h2>Aplicar cashback a deuda</h2>
+          <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">Usa tu cashback acumulado para reducir la deuda de tu tarjeta.</p>
+          <div class="field"><label>Monto a aplicar (S/.)</label><input type="number" id="cashbackAplicarMonto" step="0.01" min="0" placeholder="0.00"></div>
+          <div class="field"><label>Fecha</label><input type="date" id="cashbackAplicarFecha"></div>
+          <button class="btn-primary" id="btnAplicarCashback" style="background:linear-gradient(135deg,#C98A2C,#FFD700);box-shadow:0 4px 0 #8a5c0a,0 8px 20px rgba(255,215,0,0.3);">Aplicar cashback → deuda</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gastos del mes con tarjeta -->
+    <div class="grid2 block">
+      <div class="card">
+        <h2>Registrar gasto con tarjeta</h2>
+        <div class="field"><label>Fecha</label><input type="date" id="tcFecha"></div>
+        <div class="field"><label>Descripción</label><input type="text" id="tcDesc" placeholder="Ej. Supermercado Wong, Amazon..."></div>
+        <div class="field"><label>Categoría</label><select id="tcCat"></select></div>
+        <div class="field"><label>Monto (S/.)</label><input type="number" id="tcMonto" step="0.01" min="0" placeholder="0.00"></div>
+        <div class="field">
+          <label>¿Convertir a cuotas?</label>
+          <select id="tcCuotas">
+            <option value="1">No, pago al contado (1 cuota)</option>
+            <option value="3">3 cuotas</option>
+            <option value="6">6 cuotas</option>
+            <option value="9">9 cuotas</option>
+            <option value="12">12 cuotas</option>
+            <option value="18">18 cuotas</option>
+            <option value="24">24 cuotas</option>
+          </select>
+        </div>
+        <div id="tcCuotasFields" style="display:none">
+          <div class="field"><label>Tasa de interés anual (%)</label><input type="number" id="tcTasa" step="0.01" min="0" placeholder="Ej. 49.9"></div>
+          <div class="field"><label>Cuota mensual estimada</label><div id="tcCuotaEstimada" style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--gold);padding:9px 0;">— Ingresa tasa para calcular</div></div>
+        </div>
+        <button class="btn-primary" id="btnAgregarGastoTC">Registrar gasto</button>
+      </div>
+
+      <div class="card">
+        <h2>Registrar cashback recibido</h2>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">Cada vez que el banco te abone cashback, regístralo aquí.</p>
+        <div class="field"><label>Fecha</label><input type="date" id="cbFecha"></div>
+        <div class="field"><label>Monto de cashback (S/.)</label><input type="number" id="cbMonto" step="0.01" min="0" placeholder="0.00"></div>
+        <div class="field"><label>Descripción (opcional)</label><input type="text" id="cbDesc" placeholder="Ej. Cashback marzo, bono bienvenida..."></div>
+        <button class="btn-primary" id="btnRegistrarCashback" style="background:linear-gradient(135deg,#C98A2C,#FFD700);box-shadow:0 4px 0 #8a5c0a,0 8px 20px rgba(255,215,0,0.3);">Registrar cashback</button>
+
+        <div style="margin-top:20px;padding-top:16px;border-top:1px dashed var(--line);">
+          <h2>Registrar pago a tarjeta</h2>
+          <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">Cada vez que pagues tu tarjeta desde tu cuenta bancaria.</p>
+          <div class="field"><label>Fecha</label><input type="date" id="pagTCFecha"></div>
+          <div class="field"><label>Monto pagado (S/.)</label><input type="number" id="pagTCMonto" step="0.01" min="0" placeholder="0.00"></div>
+          <div class="field"><label>Cuenta de origen</label><select id="pagTCMetodo"></select></div>
+          <button class="btn-primary" id="btnPagarTC">Registrar pago</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Movimientos de la tarjeta -->
+    <section class="block">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+          <h2 style="margin:0;">Movimientos de la tarjeta</h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <select id="tcFilterMes" style="padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:rgba(8,10,22,0.55);color:var(--ink);font-size:13px;"></select>
+            <select id="tcFilterTipo" style="padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:rgba(8,10,22,0.55);color:var(--ink);font-size:13px;">
+              <option value="">Todos</option>
+              <option value="gasto">Gastos</option>
+              <option value="pago">Pagos</option>
+              <option value="cashback">Cashback</option>
+            </select>
+          </div>
+        </div>
+        <div id="tcLedger"></div>
+      </div>
+    </section>
+
+    <!-- Cuotas activas -->
+    <section class="block">
+      <div class="card">
+        <h2>Cuotas activas</h2>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 14px;">Compras convertidas a cuotas — aquí ves cuánto queda por pagar en cada una.</p>
+        <div id="tcCuotasList"></div>
+      </div>
+    </section>
+
+    <!-- Gastos por categoría tarjeta -->
+    <section class="block">
+      <div class="card">
+        <h2>Gastos por categoría (tarjeta)</h2>
+        <div id="tcCatBars"></div>
+      </div>
+    </section>
+
+  </div><!-- /viewTarjetaBCP -->
 
   <!-- ═══ PRESUPUESTOS ═══ -->
   <div id="viewPresupuestos" style="display:none">
@@ -958,6 +1175,12 @@ let saldosIniciales = {};
 let debts = [];
 let transfers = [];
 let presupuestos = [];
+let cardBCP = { config:{}, movimientos:[], cashbacks:[], pagos:[] };
+
+// Filtros de movimientos
+let filterTipo = '';
+let filterMetodo = '';
+let filterCat = '';
 let tipoActual = 'ingreso';
 let firstLoad = true;
 let savingLocally = false; // avoid re-rendering from our own writes mid-edit
@@ -981,7 +1204,7 @@ function showToast(msg){
 
 async function persist(){
   try{
-    await setDoc(docRef, { entries, saldosIniciales, debts, transfers, presupuestos, actualizadoEl: new Date().toISOString() });
+    await setDoc(docRef, { entries, saldosIniciales, debts, transfers, presupuestos, cardBCP, actualizadoEl: new Date().toISOString() });
     setSyncStatus('ok', 'Sincronizado');
   }catch(e){
     console.error('Error guardando en Firestore', e);
@@ -998,6 +1221,7 @@ onSnapshot(docRef, (snap)=>{
   debts = data.debts || [];
   transfers = data.transfers || [];
   presupuestos = data.presupuestos || [];
+  cardBCP = data.cardBCP || { config:{}, movimientos:[], cashbacks:[], pagos:[] };
   setSyncStatus('ok', firstLoad ? 'Conectado' : 'Actualizado desde otro dispositivo');
   firstLoad = false;
   renderAll();
@@ -1040,8 +1264,8 @@ function render(){
   const ym = currentMonth();
   document.getElementById('ledgerTitle').textContent = `Movimientos de ${monthLabel(ym)}`;
 
-  const monthEntries = entries.filter(e => e.date && e.date.startsWith(ym))
-                               .sort((a,b)=> b.date.localeCompare(a.date));
+  let monthEntries = entries.filter(e => e.date && e.date.startsWith(ym))
+                             .sort((a,b)=> b.date.localeCompare(a.date));
 
   const totalIncome = monthEntries.filter(e=>e.type==='ingreso').reduce((s,e)=>s+Number(e.amount||0),0);
   const totalExpense = monthEntries.filter(e=>e.type==='gasto').reduce((s,e)=>s+Number(e.amount||0),0);
@@ -1054,10 +1278,15 @@ function render(){
   balEl.classList.toggle('positive', balance >= 0);
   balEl.classList.toggle('negative', balance < 0);
 
+  // Apply filters
+  if(filterTipo) monthEntries = monthEntries.filter(e=>e.type===filterTipo);
+  if(filterMetodo) monthEntries = monthEntries.filter(e=>e.method===filterMetodo);
+  if(filterCat) monthEntries = monthEntries.filter(e=>e.category===filterCat);
+
   const list = document.getElementById('ledgerList');
   list.innerHTML = '';
   if(monthEntries.length === 0){
-    list.innerHTML = '<div class="empty">Sin movimientos este mes todavía. Agrega el primero desde el formulario.</div>';
+    list.innerHTML = '<div class="empty">Sin movimientos que coincidan con los filtros.</div>';
   } else {
     monthEntries.forEach(e=>{
       const row = document.createElement('div');
@@ -1080,8 +1309,9 @@ function render(){
     });
   }
 
-  renderBars('expenseBars', CAT_GASTOS, monthEntries.filter(e=>e.type==='gasto'), 'expense');
-  renderBars('incomeBars', CAT_INGRESOS, monthEntries.filter(e=>e.type==='ingreso'), 'income');
+  const allMonth = entries.filter(e => e.date && e.date.startsWith(ym));
+  renderBars('expenseBars', CAT_GASTOS, allMonth.filter(e=>e.type==='gasto'), 'expense');
+  renderBars('incomeBars', CAT_INGRESOS, allMonth.filter(e=>e.type==='ingreso'), 'income');
 }
 
 function renderBars(containerId, categories, monthEntries, cls){
@@ -1799,6 +2029,203 @@ function renderReports(){
   });
 }
 
+// ─── TARJETA BCP ───────────────────────────────────────────────────
+function calcCuotaMensual(monto, tasaAnual, numCuotas){
+  if(numCuotas <= 1) return monto;
+  const r = tasaAnual / 100 / 12;
+  if(r === 0) return monto / numCuotas;
+  return monto * r * Math.pow(1+r, numCuotas) / (Math.pow(1+r, numCuotas) - 1);
+}
+
+function tcTotalDeuda(){
+  const gastos = (cardBCP.movimientos||[]).reduce((s,m)=>s+Number(m.monto||0),0);
+  const pagados = (cardBCP.pagos||[]).reduce((s,p)=>s+Number(p.monto||0),0);
+  const cashbackUsado = (cardBCP.cashbacks||[]).filter(c=>c.aplicado).reduce((s,c)=>s+Number(c.monto||0),0);
+  return Math.max(0, gastos - pagados - cashbackUsado);
+}
+
+function tcCashbackDisponible(){
+  const acumulado = (cardBCP.cashbacks||[]).filter(c=>!c.aplicado).reduce((s,c)=>s+Number(c.monto||0),0);
+  return acumulado;
+}
+
+function renderTarjetaBCP(){
+  const cfg = cardBCP.config || {};
+  const deuda = tcTotalDeuda();
+  const linea = Number(cfg.linea || 0);
+  const disponible = Math.max(0, linea - deuda);
+  const cashback = tcCashbackDisponible();
+
+  document.getElementById('card4digits').textContent = cfg.digits || '——';
+  document.getElementById('cardLinea').textContent = fmt(linea);
+  document.getElementById('cardDeuda').textContent = fmt(deuda);
+  document.getElementById('cardDisponible').textContent = fmt(disponible);
+  document.getElementById('cardCashback').textContent = fmt(cashback);
+
+  // Populate config fields
+  document.getElementById('cardDigits').value = cfg.digits || '';
+  document.getElementById('cardLineaInput').value = cfg.linea || '';
+  document.getElementById('cardFechaCorte').value = cfg.fechaCorte || '';
+  document.getElementById('cardFechaPago').value = cfg.fechaPago || '';
+  document.getElementById('cardPctCashback').value = cfg.pctCashback || '';
+
+  // Ciclo info
+  const cicloEl = document.getElementById('cardCicloInfo');
+  if(cfg.fechaCorte && cfg.fechaPago){
+    const hoy = new Date();
+    const diaCorte = Number(cfg.fechaCorte);
+    const diaPago = Number(cfg.fechaPago);
+    let proximoCorte = new Date(hoy.getFullYear(), hoy.getMonth(), diaCorte);
+    if(proximoCorte <= hoy) proximoCorte = new Date(hoy.getFullYear(), hoy.getMonth()+1, diaCorte);
+    let proximoPago = new Date(hoy.getFullYear(), hoy.getMonth(), diaPago);
+    if(proximoPago <= hoy) proximoPago = new Date(hoy.getFullYear(), hoy.getMonth()+1, diaPago);
+    const diasCorte = Math.ceil((proximoCorte-hoy)/(1000*60*60*24));
+    const diasPago = Math.ceil((proximoPago-hoy)/(1000*60*60*24));
+    cicloEl.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="pres-amt"><div class="a-lbl">Próximo corte</div><div class="a-val">${proximoCorte.toLocaleDateString('es-PE',{day:'2-digit',month:'short'})}</div><div style="font-size:11px;color:var(--ink-soft);margin-top:2px;">en ${diasCorte} día${diasCorte!==1?'s':''}</div></div>
+        <div class="pres-amt"><div class="a-lbl">Próximo pago</div><div class="a-val">${proximoPago.toLocaleDateString('es-PE',{day:'2-digit',month:'short'})}</div><div style="font-size:11px;color:var(--ink-soft);margin-top:2px;">en ${diasPago} día${diasPago!==1?'s':''}</div></div>
+      </div>`;
+  } else {
+    cicloEl.innerHTML = '<div class="empty">Configura la fecha de corte para ver el ciclo.</div>';
+  }
+
+  // Ledger con filtro de mes y tipo
+  const tcFilterMes = document.getElementById('tcFilterMes');
+  const tcFilterTipo = document.getElementById('tcFilterTipo');
+  const selectedMes = tcFilterMes.value || '';
+  const selectedTipo = tcFilterTipo.value || '';
+
+  // Build month options from existing data
+  const mesesSet = new Set();
+  [...(cardBCP.movimientos||[]),...(cardBCP.cashbacks||[]),...(cardBCP.pagos||[])].forEach(r=>{
+    if(r.fecha) mesesSet.add(r.fecha.slice(0,7));
+  });
+  const mesesArr = Array.from(mesesSet).sort().reverse();
+  const currentVal = tcFilterMes.value;
+  tcFilterMes.innerHTML = '<option value="">Todos los meses</option>';
+  mesesArr.forEach(m=>{
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = monthLabel(m);
+    tcFilterMes.appendChild(opt);
+  });
+  if(currentVal) tcFilterMes.value = currentVal;
+
+  // Merge all tc movements for display
+  const allRows = [
+    ...(cardBCP.movimientos||[]).map(m=>({...m, _tipo:'gasto'})),
+    ...(cardBCP.cashbacks||[]).map(c=>({...c, _tipo: c.aplicado ? 'aplicado' : 'cashback'})),
+    ...(cardBCP.pagos||[]).map(p=>({...p, _tipo:'pago'}))
+  ].filter(r=> (!selectedMes || r.fecha.startsWith(selectedMes)) && (!selectedTipo || r._tipo===selectedTipo))
+   .sort((a,b)=>b.fecha.localeCompare(a.fecha));
+
+  const tcLedger = document.getElementById('tcLedger');
+  if(allRows.length === 0){
+    tcLedger.innerHTML = '<div class="empty">Sin movimientos registrados aún.</div>';
+  } else {
+    tcLedger.innerHTML = '';
+    allRows.forEach(r=>{
+      const row = document.createElement('div');
+      row.className = 'tc-row';
+      const day = r.fecha.slice(8,10)+'/'+r.fecha.slice(5,7);
+      const badgeLabel = {gasto:'Gasto',cashback:'Cashback',aplicado:'CB aplicado',pago:'Pago'}[r._tipo] || r._tipo;
+      const amtSign = r._tipo==='gasto' ? '-' : '+';
+      const amtClass = r._tipo==='gasto' ? 'expense' : (r._tipo==='pago'||r._tipo==='cashback'||r._tipo==='aplicado' ? 'income' : '');
+      const cuotaBadge = r.cuotas > 1 ? `<span class="tc-badge cuotas">${r.cuotas}c</span>` : '';
+      row.innerHTML = `
+        <div class="tc-date">${day}</div>
+        <div class="tc-desc">${r.desc||r.descripcion||'—'}${cuotaBadge}<span class="tc-badge ${r._tipo}">${badgeLabel}</span><small>${r.categoria||r.metodo||''}</small></div>
+        <div class="amount ${amtClass}">${amtSign} ${fmt(r.monto)}</div>
+        <button class="del" data-deltype="${r._tipo}" data-delid="${r.id}" title="Eliminar">✕</button>
+      `;
+      tcLedger.appendChild(row);
+    });
+    tcLedger.querySelectorAll('[data-delid]').forEach(btn=>{
+      btn.addEventListener('click', async()=>{
+        const id = btn.dataset.delid;
+        const tipo = btn.dataset.deltype;
+        if(tipo==='gasto') cardBCP.movimientos = (cardBCP.movimientos||[]).filter(m=>m.id!==id);
+        else if(tipo==='cashback'||tipo==='aplicado') cardBCP.cashbacks = (cardBCP.cashbacks||[]).filter(c=>c.id!==id);
+        else if(tipo==='pago') cardBCP.pagos = (cardBCP.pagos||[]).filter(p=>p.id!==id);
+        await save(); renderTarjetaBCP();
+      });
+    });
+  }
+
+  // Cuotas activas
+  const cuotasEl = document.getElementById('tcCuotasList');
+  const cuotasActivas = (cardBCP.movimientos||[]).filter(m=>m.cuotas > 1);
+  if(cuotasActivas.length === 0){
+    cuotasEl.innerHTML = '<div class="empty">No tienes compras en cuotas activas.</div>';
+  } else {
+    cuotasEl.innerHTML = '';
+    cuotasActivas.forEach(m=>{
+      const pagadasCount = Number(m.cuotasPagadas||0);
+      const pct = Math.round((pagadasCount / m.cuotas)*100);
+      const card = document.createElement('div');
+      card.className = 'cuota-card';
+      card.innerHTML = `
+        <div class="cuota-card-top">
+          <div>
+            <div class="cuota-card-title">${m.desc} <span class="tc-badge cuotas">${m.cuotas} cuotas</span></div>
+            <div class="cuota-card-meta">${m.fecha.slice(8,10)}/${m.fecha.slice(5,7)}/${m.fecha.slice(0,4)} · Cuota: ${fmt(m.cuotaMensual||0)}/mes · Tasa: ${m.tasa||0}% anual</div>
+          </div>
+          <div style="text-align:right;white-space:nowrap;">
+            <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;">${pagadasCount}/${m.cuotas}</div>
+            <div style="font-size:11px;color:var(--ink-soft);">pagadas</div>
+          </div>
+        </div>
+        <div class="cuota-progress"><div class="cuota-progress-fill" style="width:${pct}%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft);">
+          <span>Monto total: ${fmt(m.monto)}</span>
+          <span>Restante: ${fmt(Math.max(0,(m.cuotas-pagadasCount)*(m.cuotaMensual||0)))}</span>
+          <span>${pct}%</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn-primary" data-pagarcuota="${m.id}" style="flex:1;padding:8px 0;font-size:12px;">✓ Registrar cuota pagada</button>
+          ${pagadasCount > 0 ? `<button class="btn-secondary" data-despagarcuota="${m.id}" style="padding:8px 12px;font-size:12px;">Deshacer</button>` : ''}
+        </div>
+      `;
+      cuotasEl.appendChild(card);
+    });
+    cuotasEl.querySelectorAll('[data-pagarcuota]').forEach(btn=>{
+      btn.addEventListener('click', async()=>{
+        const idx = (cardBCP.movimientos||[]).findIndex(m=>m.id===btn.dataset.pagarcuota);
+        if(idx<0) return;
+        const m = cardBCP.movimientos[idx];
+        if((m.cuotasPagadas||0) >= m.cuotas){ showToast('Ya están todas las cuotas pagadas.'); return; }
+        cardBCP.movimientos[idx].cuotasPagadas = (m.cuotasPagadas||0) + 1;
+        await save(); renderTarjetaBCP();
+      });
+    });
+    cuotasEl.querySelectorAll('[data-despagarcuota]').forEach(btn=>{
+      btn.addEventListener('click', async()=>{
+        const idx = (cardBCP.movimientos||[]).findIndex(m=>m.id===btn.dataset.despagarcuota);
+        if(idx<0) return;
+        cardBCP.movimientos[idx].cuotasPagadas = Math.max(0,(cardBCP.movimientos[idx].cuotasPagadas||1)-1);
+        await save(); renderTarjetaBCP();
+      });
+    });
+  }
+
+  // Barras por categoría
+  const catTotalsTC = CAT_GASTOS.map(cat=>({
+    cat, total:(cardBCP.movimientos||[]).filter(m=>m.categoria===cat).reduce((s,m)=>s+Number(m.monto||0),0)
+  })).filter(x=>x.total>0).sort((a,b)=>b.total-a.total);
+  const maxTC = Math.max(1,...catTotalsTC.map(x=>x.total));
+  const catBarsEl = document.getElementById('tcCatBars');
+  if(catTotalsTC.length===0){
+    catBarsEl.innerHTML = '<div class="empty">Sin gastos registrados todavía.</div>';
+  } else {
+    catBarsEl.innerHTML = catTotalsTC.map(t=>`
+      <div class="bar-row">
+        <div class="bar-top"><span>${t.cat}</span><span class="amt">${fmt(t.total)}</span></div>
+        <div class="bar-track"><div class="bar-fill expense" style="width:${(t.total/maxTC)*100}%"></div></div>
+      </div>`).join('');
+  }
+}
+
 function renderAll(){
   render();
   renderAccounts();
@@ -1806,10 +2233,11 @@ function renderAll(){
   renderTransfers();
   if(document.getElementById("viewReportes").style.display !== "none") renderReports();
   if(document.getElementById("viewPresupuestos").style.display !== "none") renderPresupuestos();
+  if(document.getElementById("viewTarjetaBCP").style.display !== "none") renderTarjetaBCP();
 }
 
 function switchTab(tab){
-  ["Movimientos","Reportes","DeudasCobrar","DeudasPagar","Presupuestos"].forEach(t=>{
+  ["Movimientos","Reportes","DeudasCobrar","DeudasPagar","TarjetaBCP","Presupuestos"].forEach(t=>{
     document.getElementById("view"+t).style.display = tab===t ? "" : "none";
     document.getElementById("tab"+t).classList.toggle("active", tab===t);
   });
@@ -1817,6 +2245,7 @@ function switchTab(tab){
   if(tab==="Presupuestos") renderPresupuestos();
   if(tab==="DeudasCobrar") renderDeudaTab('cobrar');
   if(tab==="DeudasPagar") renderDeudaTab('pagar');
+  if(tab==="TarjetaBCP") renderTarjetaBCP();
 }
 
 async function save(){
@@ -1996,7 +2425,133 @@ function init(){
   document.getElementById('tabReportes').addEventListener('click', ()=>switchTab('Reportes'));
   document.getElementById('tabDeudasCobrar').addEventListener('click', ()=>switchTab('DeudasCobrar'));
   document.getElementById('tabDeudasPagar').addEventListener('click', ()=>switchTab('DeudasPagar'));
+  document.getElementById('tabTarjetaBCP').addEventListener('click', ()=>switchTab('TarjetaBCP'));
   document.getElementById('tabPresupuestos').addEventListener('click', ()=>switchTab('Presupuestos'));
+
+  // Filter bar: populate selects
+  fillSelect(document.getElementById('filterMetodo'), [''].concat(METODOS));
+  document.getElementById('filterMetodo').options[0].text = 'Método: Todos';
+  const allCats = [...new Set([...CAT_INGRESOS,...CAT_GASTOS])];
+  allCats.forEach(c=>{ const o=document.createElement('option');o.value=c;o.textContent=c;document.getElementById('filterCat').appendChild(o); });
+
+  document.getElementById('filterTipo').addEventListener('change', e=>{ filterTipo=e.target.value; render(); });
+  document.getElementById('filterMetodo').addEventListener('change', e=>{ filterMetodo=e.target.value; render(); });
+  document.getElementById('filterCat').addEventListener('change', e=>{ filterCat=e.target.value; render(); });
+  document.getElementById('btnClearFilters').addEventListener('click', ()=>{
+    filterTipo=''; filterMetodo=''; filterCat='';
+    document.getElementById('filterTipo').value='';
+    document.getElementById('filterMetodo').value='';
+    document.getElementById('filterCat').value='';
+    render();
+  });
+
+  // ── Tarjeta BCP ──
+  fillSelect(document.getElementById('tcCat'), CAT_GASTOS);
+  fillSelect(document.getElementById('pagTCMetodo'), METODOS.filter(m=>!m.includes('crédito')));
+  document.getElementById('tcFecha').value = new Date().toISOString().slice(0,10);
+  document.getElementById('cbFecha').value = new Date().toISOString().slice(0,10);
+  document.getElementById('pagTCFecha').value = new Date().toISOString().slice(0,10);
+  document.getElementById('cashbackAplicarFecha').value = new Date().toISOString().slice(0,10);
+
+  document.getElementById('tcCuotas').addEventListener('change', ()=>{
+    const n = parseInt(document.getElementById('tcCuotas').value);
+    document.getElementById('tcCuotasFields').style.display = n > 1 ? '' : 'none';
+    recalcCuota();
+  });
+  function recalcCuota(){
+    const monto = parseFloat(document.getElementById('tcMonto').value)||0;
+    const n = parseInt(document.getElementById('tcCuotas').value)||1;
+    const tasa = parseFloat(document.getElementById('tcTasa').value)||0;
+    if(n>1 && monto>0 && tasa>0){
+      const cuota = calcCuotaMensual(monto,tasa,n);
+      document.getElementById('tcCuotaEstimada').textContent = `${fmt(cuota)}/mes × ${n} = ${fmt(cuota*n)}`;
+    } else if(n>1 && monto>0){
+      document.getElementById('tcCuotaEstimada').textContent = '— Ingresa la tasa para calcular';
+    }
+  }
+  document.getElementById('tcMonto').addEventListener('input', recalcCuota);
+  document.getElementById('tcTasa').addEventListener('input', recalcCuota);
+
+  document.getElementById('btnGuardarConfig').addEventListener('click', async()=>{
+    if(!cardBCP.config) cardBCP.config={};
+    cardBCP.config.digits = document.getElementById('cardDigits').value.trim();
+    cardBCP.config.linea = parseFloat(document.getElementById('cardLineaInput').value)||0;
+    cardBCP.config.fechaCorte = document.getElementById('cardFechaCorte').value;
+    cardBCP.config.fechaPago = document.getElementById('cardFechaPago').value;
+    cardBCP.config.pctCashback = parseFloat(document.getElementById('cardPctCashback').value)||0;
+    await save(); renderTarjetaBCP(); showToast('Configuración guardada ✓');
+  });
+
+  document.getElementById('btnAgregarGastoTC').addEventListener('click', async()=>{
+    const fecha = document.getElementById('tcFecha').value;
+    const desc = document.getElementById('tcDesc').value.trim();
+    const cat = document.getElementById('tcCat').value;
+    const monto = parseFloat(document.getElementById('tcMonto').value);
+    const n = parseInt(document.getElementById('tcCuotas').value)||1;
+    const tasa = parseFloat(document.getElementById('tcTasa').value)||0;
+    if(!fecha||!desc||isNaN(monto)||monto<=0){ alert('Completa fecha, descripción y monto.'); return; }
+    const cuotaMensual = n>1 ? calcCuotaMensual(monto,tasa,n) : monto;
+    if(!cardBCP.movimientos) cardBCP.movimientos=[];
+    cardBCP.movimientos.push({ id:uid(), fecha, desc, categoria:cat, monto, cuotas:n, tasa, cuotaMensual, cuotasPagadas:0 });
+    // Si hay % cashback configurado, acumularlo automáticamente
+    const pct = Number(cardBCP.config?.pctCashback||0);
+    if(pct>0){
+      if(!cardBCP.cashbacks) cardBCP.cashbacks=[];
+      const cbMonto = monto * pct / 100;
+      cardBCP.cashbacks.push({ id:uid(), fecha, monto:cbMonto, descripcion:`Cashback automático (${pct}%) — ${desc}`, aplicado:false });
+    }
+    document.getElementById('tcDesc').value='';
+    document.getElementById('tcMonto').value='';
+    document.getElementById('tcCuotas').value='1';
+    document.getElementById('tcCuotasFields').style.display='none';
+    await save(); renderTarjetaBCP(); showToast('Gasto registrado' + (pct>0 ? ` + cashback de ${fmt(monto*pct/100)} acumulado` : ''));
+  });
+
+  document.getElementById('btnRegistrarCashback').addEventListener('click', async()=>{
+    const fecha = document.getElementById('cbFecha').value;
+    const monto = parseFloat(document.getElementById('cbMonto').value);
+    const desc = document.getElementById('cbDesc').value.trim();
+    if(!fecha||isNaN(monto)||monto<=0){ alert('Ingresa fecha y monto de cashback.'); return; }
+    if(!cardBCP.cashbacks) cardBCP.cashbacks=[];
+    cardBCP.cashbacks.push({ id:uid(), fecha, monto, descripcion:desc||'Cashback recibido', aplicado:false });
+    document.getElementById('cbMonto').value='';
+    document.getElementById('cbDesc').value='';
+    await save(); renderTarjetaBCP(); showToast(`Cashback de ${fmt(monto)} registrado ✓`);
+  });
+
+  document.getElementById('btnPagarTC').addEventListener('click', async()=>{
+    const fecha = document.getElementById('pagTCFecha').value;
+    const monto = parseFloat(document.getElementById('pagTCMonto').value);
+    const metodo = document.getElementById('pagTCMetodo').value;
+    if(!fecha||isNaN(monto)||monto<=0){ alert('Ingresa fecha y monto del pago.'); return; }
+    if(!cardBCP.pagos) cardBCP.pagos=[];
+    cardBCP.pagos.push({ id:uid(), fecha, monto, metodo });
+    document.getElementById('pagTCMonto').value='';
+    await save(); renderTarjetaBCP(); renderAccounts(); showToast(`Pago de ${fmt(monto)} registrado desde ${metodo} ✓`);
+  });
+
+  document.getElementById('btnAplicarCashback').addEventListener('click', async()=>{
+    const monto = parseFloat(document.getElementById('cashbackAplicarMonto').value);
+    const fecha = document.getElementById('cashbackAplicarFecha').value;
+    const disponible = tcCashbackDisponible();
+    if(!fecha||isNaN(monto)||monto<=0){ alert('Ingresa fecha y monto a aplicar.'); return; }
+    if(monto > disponible){ alert(`Solo tienes ${fmt(disponible)} de cashback disponible.`); return; }
+    // Mark cashbacks as applied (FIFO)
+    let restante = monto;
+    (cardBCP.cashbacks||[]).filter(c=>!c.aplicado).sort((a,b)=>a.fecha.localeCompare(b.fecha)).forEach(c=>{
+      if(restante<=0) return;
+      if(c.monto <= restante){ c.aplicado=true; restante-=c.monto; }
+      else { c.monto-=restante; restante=0; }
+    });
+    // Register as a "pago" for deuda reduction
+    if(!cardBCP.pagos) cardBCP.pagos=[];
+    cardBCP.pagos.push({ id:uid(), fecha, monto, metodo:'Cashback aplicado' });
+    document.getElementById('cashbackAplicarMonto').value='';
+    await save(); renderTarjetaBCP(); showToast(`${fmt(monto)} de cashback aplicados a tu deuda ✓`);
+  });
+
+  document.getElementById('tcFilterMes').addEventListener('change', renderTarjetaBCP);
+  document.getElementById('tcFilterTipo').addEventListener('change', renderTarjetaBCP);
   document.getElementById('yearSelect').addEventListener('change', renderReports);
 
   // Presupuestos — filtros y orden
