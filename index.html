@@ -289,6 +289,21 @@
   .rp-row.income{color:var(--income);}
   .rp-row.warn{color:var(--gold);}
 
+  .proy-row{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:9px 4px;border-bottom:1px solid var(--line);font-size:13px;
+  }
+  .proy-row:last-child{border-bottom:none;}
+  .proy-row .pr-name{flex:1;}
+  .proy-row .pr-name small{display:block;color:var(--ink-soft);font-size:11px;}
+  .proy-row .pr-amount{font-family:'JetBrains Mono',monospace;font-weight:600;white-space:nowrap;}
+  .proy-subtotal{
+    display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-weight:700;
+    font-size:13.5px;padding:8px 4px 2px;border-top:1px solid var(--line);margin-top:2px;
+  }
+  .proy-subtotal.income{color:var(--income);}
+  .proy-subtotal.expense{color:var(--expense);}
+
   .transfer-block{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line);}
   .transfer-form{
     display:grid;grid-template-columns: 1fr 1fr 130px 150px;gap:12px;align-items:end;
@@ -506,6 +521,7 @@
     <button type="button" class="tab-btn" id="tabDeudasPagar">Deudas por Pagar</button>
     <button type="button" class="tab-btn" id="tabTarjetaBCP">💳 Tarjeta BCP</button>
     <button type="button" class="tab-btn" id="tabPresupuestos">Presupuestos</button>
+    <button type="button" class="tab-btn" id="tabProyeccion">🔮 Proyección</button>
   </div>
 
   <div id="viewMovimientos">
@@ -775,6 +791,10 @@
           <label for="pagarMetodoOrigen">¿En qué cuenta recibiste el dinero? (opcional)</label>
           <select id="pagarMetodoOrigen"><option value="">No aplica / no sumar a ninguna cuenta</option></select>
         </div>
+        <div class="field">
+          <label for="pagarCuotaMensual">¿La pagas en cuotas mensuales? Monto de la cuota (opcional)</label>
+          <input type="number" id="pagarCuotaMensual" step="0.01" min="0" placeholder="Ej. 100.00 — se agrega solo a tu Proyección Mensual">
+        </div>
         <button class="btn-primary" id="btnAgregarPagar">Agregar deuda por pagar</button>
       </div>
     </section>
@@ -1035,6 +1055,79 @@
 
   </div><!-- /viewPresupuestos -->
 
+  <!-- ═══ PROYECCIÓN MENSUAL ═══ -->
+  <div id="viewProyeccion" style="display:none">
+
+    <div class="hero" style="padding:26px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:4px;">
+        <div>
+          <p class="eyebrow" style="margin:0 0 2px;">Planificación · antes de que pase el mes</p>
+          <h1 style="font-size:22px;">Proyección Mensual</h1>
+        </div>
+      </div>
+      <div class="hero-grid" style="margin-top:14px;">
+        <div class="stat income">
+          <div class="label">Ingresos proyectados</div>
+          <div class="value" id="proyIngresos">S/ 0.00</div>
+        </div>
+        <div class="balance-block">
+          <div class="label">Saldo proyectado</div>
+          <div class="value" id="proySaldo">S/ 0.00</div>
+        </div>
+        <div class="stat expense">
+          <div class="label">Gastos proyectados</div>
+          <div class="value" id="proyGastos">S/ 0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2 block">
+      <div class="card">
+        <h2>Agregar concepto</h2>
+        <div class="toggle" id="proyTipoToggle">
+          <button type="button" class="active income" data-tipo="ingreso">Ingreso fijo</button>
+          <button type="button" data-tipo="gastoFijo">Gasto fijo</button>
+          <button type="button" data-tipo="gastoVariable">Gasto variable</button>
+        </div>
+        <div class="field"><label for="proyNombre">Nombre</label><input type="text" id="proyNombre" placeholder="Ej. Sueldo, Alquiler, Luz..."></div>
+        <div class="field"><label for="proyMonto" id="proyMontoLabel">Monto mensual (S/.)</label><input type="number" id="proyMonto" step="0.01" min="0" placeholder="0.00"></div>
+        <div class="field" id="proyDiaField"><label for="proyDia">Día del mes (opcional)</label><input type="number" id="proyDia" min="1" max="31" placeholder="Ej. 5"></div>
+        <button class="btn-primary" id="btnAgregarProy">Agregar a la proyección</button>
+        <p style="font-size:11.5px;color:var(--ink-soft);margin-top:10px;">
+          Para <strong>gastos variables</strong> (como servicios básicos) ingresa un monto estimado — puedes ajustarlo cuando quieras.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Ingresos fijos</h2>
+        <div id="proyListaIngresos"></div>
+        <div class="proy-subtotal income"><span>Subtotal ingresos fijos</span><span id="proySubIngresos">S/ 0.00</span></div>
+
+        <h2 style="margin-top:20px;">Gastos fijos</h2>
+        <div id="proyListaGastosFijos"></div>
+        <div class="proy-subtotal expense"><span>Subtotal gastos fijos</span><span id="proySubGastosFijos">S/ 0.00</span></div>
+
+        <h2 style="margin-top:20px;">Gastos variables (estimados)</h2>
+        <div id="proyListaGastosVariables"></div>
+        <div class="proy-subtotal expense"><span>Subtotal gastos variables</span><span id="proySubGastosVariables">S/ 0.00</span></div>
+      </div>
+    </div>
+
+    <section class="block">
+      <div class="card">
+        <h2>Cuotas automáticas (tarjeta + préstamos personales)</h2>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:-4px 0 12px;">
+          Se incluyen solas en el gasto proyectado — no necesitas agregarlas manualmente. Para que una deuda personal aparezca aquí, indícale su "cuota mensual" al crearla en Deudas por Pagar.
+        </p>
+        <div id="proyCuotasTarjeta"></div>
+        <div class="proy-subtotal expense"><span>Subtotal cuotas de tarjeta</span><span id="proySubCuotas">S/ 0.00</span></div>
+        <div id="proyCuotasDeudas" style="margin-top:14px;"></div>
+        <div class="proy-subtotal expense"><span>Subtotal préstamos personales</span><span id="proySubDeudas">S/ 0.00</span></div>
+      </div>
+    </section>
+
+  </div><!-- /viewProyeccion -->
+
   <!-- Modal Crear/Editar Presupuesto -->
   <div class="modal-overlay hidden" id="modalPresupuesto">
     <div class="modal">
@@ -1226,6 +1319,8 @@ let debts = [];
 let transfers = [];
 let presupuestos = [];
 let cardBCP = { config:{}, movimientos:[], cashbacks:[], pagos:[], retiros:[] };
+let proyeccion = { ingresos:[], gastosFijos:[], gastosVariables:[] };
+let proyTipoActual = 'ingreso';
 
 // Filtros de movimientos
 let filterTipo = '';
@@ -1254,7 +1349,7 @@ function showToast(msg){
 
 async function persist(){
   try{
-    await setDoc(docRef, { entries, saldosIniciales, debts, transfers, presupuestos, cardBCP, actualizadoEl: new Date().toISOString() });
+    await setDoc(docRef, { entries, saldosIniciales, debts, transfers, presupuestos, cardBCP, proyeccion, actualizadoEl: new Date().toISOString() });
     setSyncStatus('ok', 'Sincronizado');
   }catch(e){
     console.error('Error guardando en Firestore', e);
@@ -1272,6 +1367,7 @@ onSnapshot(docRef, (snap)=>{
   transfers = data.transfers || [];
   presupuestos = data.presupuestos || [];
   cardBCP = data.cardBCP || { config:{}, movimientos:[], cashbacks:[], pagos:[], retiros:[] };
+  proyeccion = data.proyeccion || { ingresos:[], gastosFijos:[], gastosVariables:[] };
   setSyncStatus('ok', firstLoad ? 'Conectado' : 'Actualizado desde otro dispositivo');
   firstLoad = false;
   renderAll();
@@ -1531,6 +1627,7 @@ function renderDeudaTab(tipo){
     const overdue = isOverdue(d);
     const fechaTxt = d.dueDate ? new Date(d.dueDate+'T00:00:00').toLocaleDateString('es-PE', {day:'2-digit', month:'2-digit', year:'numeric'}) : '';
     const origenTxt = d.metodoOrigen ? (tipo==='pagar' ? `Recibido en ${d.metodoOrigen}` : `Entregado desde ${d.metodoOrigen}`) : '';
+    const cuotaTxt = d.cuotaMensualEstimada ? `📅 Cuota estimada: ${fmt(d.cuotaMensualEstimada)}/mes` : '';
     const card = document.createElement('div');
     card.className = `debt-card ${d.paid ? 'liquidada' : ''}`;
     const cuotasOrdenadas = [...(d.cuotas||[])].sort((a,b)=>b.fecha.localeCompare(a.fecha));
@@ -1542,6 +1639,7 @@ function renderDeudaTab(tipo){
           <div class="debt-card-meta">
             ${fechaTxt ? (overdue ? `<span class="overdue">Vencido: ${fechaTxt}</span>` : `<span>Vence: ${fechaTxt}</span>`) : '<span>Sin fecha límite</span>'}
             ${origenTxt ? `<span>${origenTxt}</span>` : ''}
+            ${cuotaTxt ? `<span>${cuotaTxt}</span>` : ''}
           </div>
         </div>
         <button class="debt-card-del" data-del="${d.id}" title="Eliminar deuda">✕</button>
@@ -2303,6 +2401,96 @@ function renderTarjetaBCP(){
   }
 }
 
+// ─── PROYECCIÓN MENSUAL ────────────────────────────────────────────
+function renderProyList(containerId, arr, cls){
+  const container = document.getElementById(containerId);
+  if(arr.length === 0){
+    container.innerHTML = '<div class="empty">Nada agregado todavía.</div>';
+    return;
+  }
+  container.innerHTML = '';
+  arr.forEach(item=>{
+    const row = document.createElement('div');
+    row.className = 'proy-row';
+    row.innerHTML = `
+      <div class="pr-name">${item.nombre}${item.dia ? `<small>Día ${item.dia} del mes</small>` : ''}</div>
+      <div class="pr-amount" style="color:var(--${cls})">${fmt(item.monto)}</div>
+      <button class="del" data-delproy="${item.id}" title="Eliminar">✕</button>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function renderProyeccion(){
+  renderProyList('proyListaIngresos', proyeccion.ingresos||[], 'income');
+  renderProyList('proyListaGastosFijos', proyeccion.gastosFijos||[], 'expense');
+  renderProyList('proyListaGastosVariables', proyeccion.gastosVariables||[], 'expense');
+
+  const subIngresos = (proyeccion.ingresos||[]).reduce((s,i)=>s+Number(i.monto||0),0);
+  const subGastosFijos = (proyeccion.gastosFijos||[]).reduce((s,i)=>s+Number(i.monto||0),0);
+  const subGastosVariables = (proyeccion.gastosVariables||[]).reduce((s,i)=>s+Number(i.monto||0),0);
+
+  document.getElementById('proySubIngresos').textContent = fmt(subIngresos);
+  document.getElementById('proySubGastosFijos').textContent = fmt(subGastosFijos);
+  document.getElementById('proySubGastosVariables').textContent = fmt(subGastosVariables);
+
+  // Cuotas activas de tarjeta (automático, de solo lectura)
+  const cuotasActivas = (cardBCP.movimientos||[]).filter(m=> m.cuotas > 1 && (m.cuotasPagadas||0) < m.cuotas);
+  const cuotasEl = document.getElementById('proyCuotasTarjeta');
+  const subCuotas = cuotasActivas.reduce((s,m)=>s+Number(m.cuotaMensual||0),0);
+  if(cuotasActivas.length === 0){
+    cuotasEl.innerHTML = '<div class="empty">No tienes cuotas de tarjeta activas este momento.</div>';
+  } else {
+    cuotasEl.innerHTML = cuotasActivas.map(m=>`
+      <div class="proy-row">
+        <div class="pr-name">${m.desc}<small>Cuota ${(m.cuotasPagadas||0)+1} de ${m.cuotas}</small></div>
+        <div class="pr-amount" style="color:var(--expense)">${fmt(m.cuotaMensual||0)}</div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('proySubCuotas').textContent = fmt(subCuotas);
+
+  // Cuotas de préstamos personales (Deudas por Pagar con cuota mensual estimada, no liquidadas)
+  const deudasConCuota = debts.filter(d=> d.type==='pagar' && !d.paid && Number(d.cuotaMensualEstimada||0) > 0);
+  const deudasEl = document.getElementById('proyCuotasDeudas');
+  const subDeudas = deudasConCuota.reduce((s,d)=>s+Number(d.cuotaMensualEstimada||0),0);
+  if(deudasConCuota.length === 0){
+    deudasEl.innerHTML = '<div class="empty">No tienes préstamos personales con cuota mensual configurada.</div>';
+  } else {
+    deudasEl.innerHTML = deudasConCuota.map(d=>{
+      const calc = debtCalc(d);
+      return `
+      <div class="proy-row">
+        <div class="pr-name">${d.person}${d.description ? ' — '+d.description : ''}<small>Restante: ${fmt(calc.restante)}</small></div>
+        <div class="pr-amount" style="color:var(--expense)">${fmt(d.cuotaMensualEstimada)}</div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('proySubDeudas').textContent = fmt(subDeudas);
+
+  const totalIngresos = subIngresos;
+  const totalGastos = subGastosFijos + subGastosVariables + subCuotas + subDeudas;
+  const saldo = totalIngresos - totalGastos;
+
+  document.getElementById('proyIngresos').textContent = fmt(totalIngresos);
+  document.getElementById('proyGastos').textContent = fmt(totalGastos);
+  const saldoEl = document.getElementById('proySaldo');
+  saldoEl.textContent = fmt(saldo);
+  saldoEl.classList.toggle('positive', saldo >= 0);
+  saldoEl.classList.toggle('negative', saldo < 0);
+
+  document.querySelectorAll('[data-delproy]').forEach(btn=>{
+    btn.addEventListener('click', async()=>{
+      const id = btn.dataset.delproy;
+      proyeccion.ingresos = (proyeccion.ingresos||[]).filter(x=>x.id!==id);
+      proyeccion.gastosFijos = (proyeccion.gastosFijos||[]).filter(x=>x.id!==id);
+      proyeccion.gastosVariables = (proyeccion.gastosVariables||[]).filter(x=>x.id!==id);
+      await save();
+      renderProyeccion();
+    });
+  });
+}
+
 function renderAll(){
   render();
   renderAccounts();
@@ -2311,10 +2499,11 @@ function renderAll(){
   if(document.getElementById("viewReportes").style.display !== "none") renderReports();
   if(document.getElementById("viewPresupuestos").style.display !== "none") renderPresupuestos();
   if(document.getElementById("viewTarjetaBCP").style.display !== "none") renderTarjetaBCP();
+  if(document.getElementById("viewProyeccion").style.display !== "none") renderProyeccion();
 }
 
 function switchTab(tab){
-  ["Movimientos","Reportes","DeudasCobrar","DeudasPagar","TarjetaBCP","Presupuestos"].forEach(t=>{
+  ["Movimientos","Reportes","DeudasCobrar","DeudasPagar","TarjetaBCP","Presupuestos","Proyeccion"].forEach(t=>{
     document.getElementById("view"+t).style.display = tab===t ? "" : "none";
     document.getElementById("tab"+t).classList.toggle("active", tab===t);
   });
@@ -2323,6 +2512,7 @@ function switchTab(tab){
   if(tab==="DeudasCobrar") renderDeudaTab('cobrar');
   if(tab==="DeudasPagar") renderDeudaTab('pagar');
   if(tab==="TarjetaBCP") renderTarjetaBCP();
+  if(tab==="Proyeccion") renderProyeccion();
 }
 
 async function save(){
@@ -2417,6 +2607,7 @@ function init(){
     const monto = parseFloat(document.getElementById('pagarMonto').value);
     const fecha = document.getElementById('pagarFecha').value;
     const metodoOrigen = document.getElementById('pagarMetodoOrigen').value || null;
+    const cuotaMensualEstimada = parseFloat(document.getElementById('pagarCuotaMensual').value) || null;
 
     if(!persona || isNaN(monto) || monto <= 0){
       alert('Ingresa una persona/entidad y un monto válido (mayor a 0).');
@@ -2426,7 +2617,7 @@ function init(){
     debts.push({
       id: uid(), type: 'pagar', person: persona, description: descripcion,
       amount: monto, dueDate: fecha || null, paid: false,
-      metodoOrigen, cuotas: []
+      metodoOrigen, cuotas: [], cuotaMensualEstimada
     });
 
     document.getElementById('pagarPersona').value = '';
@@ -2434,6 +2625,7 @@ function init(){
     document.getElementById('pagarMonto').value = '';
     document.getElementById('pagarFecha').value = '';
     document.getElementById('pagarMetodoOrigen').value = '';
+    document.getElementById('pagarCuotaMensual').value = '';
 
     await save();
     renderDeudaTab('pagar');
@@ -2504,6 +2696,40 @@ function init(){
   document.getElementById('tabDeudasPagar').addEventListener('click', ()=>switchTab('DeudasPagar'));
   document.getElementById('tabTarjetaBCP').addEventListener('click', ()=>switchTab('TarjetaBCP'));
   document.getElementById('tabPresupuestos').addEventListener('click', ()=>switchTab('Presupuestos'));
+  document.getElementById('tabProyeccion').addEventListener('click', ()=>switchTab('Proyeccion'));
+
+  // ── Proyección Mensual ──
+  document.querySelectorAll('#proyTipoToggle button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      proyTipoActual = btn.dataset.tipo;
+      document.querySelectorAll('#proyTipoToggle button').forEach(b=>{
+        b.classList.remove('active','income','expense');
+      });
+      btn.classList.add('active', proyTipoActual==='ingreso' ? 'income' : 'expense');
+      const label = document.getElementById('proyMontoLabel');
+      label.textContent = proyTipoActual==='gastoVariable' ? 'Monto estimado (S/.)' : 'Monto mensual (S/.)';
+    });
+  });
+
+  document.getElementById('btnAgregarProy').addEventListener('click', async()=>{
+    const nombre = document.getElementById('proyNombre').value.trim();
+    const monto = parseFloat(document.getElementById('proyMonto').value);
+    const dia = document.getElementById('proyDia').value;
+    if(!nombre || isNaN(monto) || monto <= 0){ alert('Ingresa un nombre y un monto válido.'); return; }
+
+    const item = { id: uid(), nombre, monto, dia: dia || null };
+    if(proyTipoActual==='ingreso'){ if(!proyeccion.ingresos) proyeccion.ingresos=[]; proyeccion.ingresos.push(item); }
+    else if(proyTipoActual==='gastoFijo'){ if(!proyeccion.gastosFijos) proyeccion.gastosFijos=[]; proyeccion.gastosFijos.push(item); }
+    else { if(!proyeccion.gastosVariables) proyeccion.gastosVariables=[]; proyeccion.gastosVariables.push(item); }
+
+    document.getElementById('proyNombre').value = '';
+    document.getElementById('proyMonto').value = '';
+    document.getElementById('proyDia').value = '';
+
+    await save();
+    renderProyeccion();
+    showToast('Concepto agregado a la proyección ✓');
+  });
 
   // Filter bar: populate selects
   fillSelect(document.getElementById('filterMetodo'), [''].concat(METODOS));
