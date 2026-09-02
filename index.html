@@ -1710,7 +1710,12 @@ function saldoDeMetodo(metodo){
     return s + (p.aportes||[]).filter(a=>miembros.includes(a.metodo)).reduce((s2,a)=>s2+Number(a.monto||0),0);
   }, 0);
 
-  return inicial + movimientos + transferEntrante - transferSaliente + deudas - aportesPresupuestos;
+  // Pagos hechos a las tarjetas de crédito desde esta cuenta (salen de la cuenta)
+  const pagosTarjetas =
+    (cardBCP.pagos||[]).filter(p=>miembros.includes(p.metodo)).reduce((s,p)=>s+Number(p.monto||0),0) +
+    (cardBBVA.pagos||[]).filter(p=>miembros.includes(p.metodo)).reduce((s,p)=>s+Number(p.monto||0),0);
+
+  return inicial + movimientos + transferEntrante - transferSaliente + deudas - aportesPresupuestos - pagosTarjetas;
 }
 
 function renderAccounts(){
