@@ -1685,8 +1685,12 @@ function saldoDeMetodo(metodo){
   const miembros = metodosDelGrupo(metodo);
   const g = grupoDe(metodo);
   const inicial = Number(saldosIniciales[g] || 0);
+  const esTarjetaCredito = miembros.includes('Tarjeta de crédito BCP') || miembros.includes('Tarjeta de crédito BBVA');
 
-  const movimientos = entries.filter(e=>miembros.includes(e.method))
+  // Para las tarjetas de crédito, el saldo se calcula EXCLUSIVAMENTE desde su propio módulo
+  // (compras, retiros, pagos, cashback) para evitar dobles conteos con movimientos etiquetados
+  // manualmente (p.ej. la comisión de un retiro, que ya está reflejada dentro del módulo).
+  const movimientos = esTarjetaCredito ? 0 : entries.filter(e=>miembros.includes(e.method))
     .reduce((s,e)=> s + (e.type==='ingreso' ? Number(e.amount||0) : -Number(e.amount||0)), 0);
 
   const transferSaliente = transfers.filter(t=>miembros.includes(t.from)).reduce((s,t)=>s+Number(t.amount||0),0);
@@ -1715,7 +1719,13 @@ function saldoDeMetodo(metodo){
     (cardBCP.pagos||[]).filter(p=>miembros.includes(p.metodo)).reduce((s,p)=>s+Number(p.monto||0),0) +
     (cardBBVA.pagos||[]).filter(p=>miembros.includes(p.metodo)).reduce((s,p)=>s+Number(p.monto||0),0);
 
-  return inicial + movimientos + transferEntrante - transferSaliente + deudas - aportesPresupuestos - pagosTarjetas;
+  // Si el método es una tarjeta de crédito, su "saldo" es -deuda actual
+  // (así se ve reflejada en Saldos de cuentas, junto a tus cuentas bancarias)
+  let ajusteTarjeta = 0;
+  if(miembros.includes('Tarjeta de crédito BCP')) ajusteTarjeta -= tcTotalDeuda();
+  if(miembros.includes('Tarjeta de crédito BBVA')) ajusteTarjeta -= tcTotalDeudaBBVA();
+
+  return inicial + movimientos + transferEntrante - transferSaliente + deudas - aportesPresupuestos - pagosTarjetas + ajusteTarjeta;
 }
 
 function renderAccounts(){
@@ -3265,18 +3275,16 @@ function init(){
     const disponible = tcCashbackDisponible();
     if(!fecha||isNaN(monto)||monto<=0){ alert('Ingresa fecha y monto a aplicar.'); return; }
     if(monto > disponible){ alert(`Solo tienes ${fmt(disponible)} de cashback disponible.`); return; }
-    // Mark cashbacks as applied (FIFO)
+    // Mark cashbacks as applied (FIFO) — esto ya reduce la deuda vía cashbackUsado en tcTotalDeuda(),
+    // no se registra también como "pago" para evitar restar dos veces.
     let restante = monto;
     (cardBCP.cashbacks||[]).filter(c=>!c.aplicado).sort((a,b)=>a.fecha.localeCompare(b.fecha)).forEach(c=>{
       if(restante<=0) return;
       if(c.monto <= restante){ c.aplicado=true; restante-=c.monto; }
       else { c.monto-=restante; restante=0; }
     });
-    // Register as a "pago" for deuda reduction
-    if(!cardBCP.pagos) cardBCP.pagos=[];
-    cardBCP.pagos.push({ id:uid(), fecha, monto, metodo:'Cashback aplicado' });
     document.getElementById('cashbackAplicarMonto').value='';
-    await save(); renderTarjetaBCP(); showToast(`${fmt(monto)} de cashback aplicados a tu deuda ✓`);
+    await save(); renderTarjetaBCP(); renderAccounts(); showToast(`${fmt(monto)} de cashback aplicados a tu deuda ✓`);
   });
 
   document.getElementById('tcFilterMes').addEventListener('change', renderTarjetaBCP);
